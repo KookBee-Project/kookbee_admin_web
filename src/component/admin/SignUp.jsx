@@ -19,6 +19,8 @@ const SignUp = () => {
     userPhoneNumber: "",
     userType: "",
     userStatus: "AVAILABLE",
+    caompanyId: 0,
+    campusList: [],
   });
 
   // 회사 코드 검증을 위한 초기값 세팅
@@ -34,9 +36,60 @@ const SignUp = () => {
   const [userBirthMessage, setUserBirthMessage] = useState("");
   const [userPhoneNumberMessage, setUserPhoneNumberMessage] = useState("");
 
+  const input_li = [
+    {
+      label: "이메일",
+      type: "text",
+      name: "userEmail",
+      placeholder: "example@kookbee.com",
+      message: userEmailMessage,
+    },
+    {
+      label: "비밀번호",
+      type: "password",
+      name: "userPw",
+      placeholder: "Password",
+      message: userPwMessage,
+    },
+    {
+      label: "비밀번호 재확인",
+      type: "password",
+      name: "userPwConfirm",
+      placeholder: "Confirm Password",
+      message: userPwConfirmMessage,
+    },
+    {
+      label: "이름",
+      type: "text",
+      name: "userName",
+      placeholder: "김쿡비",
+      message: userNameMessage,
+    },
+    {
+      label: "생년월일",
+      type: "text",
+      name: "userBirth",
+      placeholder: "19990508",
+      message: userBirthMessage,
+    },
+    {
+      label: "연락처",
+      type: "text",
+      name: "userPhoneNumber",
+      placeholder: "010-1234-5678",
+      message: userPhoneNumberMessage,
+    },
+  ];
+  const onCampusListHandler = (e) => {
+    const {value} = e.target;
+    console.log(value);
+        // setUsers({...users,})
+  }
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setUsers({ ...users, [name]: value });
+  
+
 
     // 이메일 검사
     const emailRegExp =
@@ -146,60 +199,19 @@ const SignUp = () => {
                 onChange={onChangeHandler}
               />
               강사
-              <h2>이메일</h2>
-              <input
-                type="text"
-                class="block border border-grey-light w-full p-3 rounded mb-4 text-center"
-                name="userEmail"
-                onChange={(e) => onChangeHandler(e)}
-                placeholder="example@kookbee.com"
-              />
-              <p className="message"> {userEmailMessage} </p>
-              <h2>비밀번호</h2>
-              <input
-                type="password"
-                class="block border border-grey-light w-full p-3 rounded mb-4 text-center"
-                name="userPw"
-                onChange={(e) => onChangeHandler(e)}
-                placeholder="Password"
-              />
-              <p className="message"> {userPwMessage} </p>
-              <h2>비밀번호 재확인</h2>
-              <input
-                type="password"
-                class="block border border-grey-light w-full p-3 rounded mb-4 text-center"
-                name="userPwConfirm"
-                onChange={(e) => onChangeHandler(e)}
-                placeholder="Confirm Password"
-              />
-              <p className="message"> {userPwConfirmMessage} </p>
-              <h2>이름</h2>
-              <input
-                type="text"
-                class="block border border-grey-light w-full p-3 rounded mb-4 text-center"
-                name="userName"
-                onChange={(e) => onChangeHandler(e)}
-                placeholder="김쿡비"
-              />
-              <p className="message"> {userNameMessage} </p>
-              <h2>생년월일</h2>
-              <input
-                type="text"
-                class="block border border-grey-light w-full p-3 rounded mb-4 text-center"
-                name="userBirth"
-                onChange={(e) => onChangeHandler(e)}
-                placeholder="19990508"
-              />
-              <p className="message"> {userBirthMessage} </p>
-              <h2>연락처</h2>
-              <input
-                type="text"
-                class="block border border-grey-light w-full p-3 rounded mb-4 text-center"
-                name="userPhoneNumber"
-                onChange={(e) => onChangeHandler(e)}
-                placeholder="010-1234-5678"
-              />
-              <p className="message"> {userPhoneNumberMessage} </p>
+              {input_li?.map((el) => (
+                <>
+                  <h2>{el.label}</h2>
+                  <input
+                    type={el.type}
+                    class="block border border-grey-light w-full p-3 rounded mb-4 text-center"
+                    name={el.name}
+                    onChange={(e) => onChangeHandler(e)}
+                    placeholder={el.placeholder}
+                  />
+                  <p className="message"> {el.message} </p>
+                </>
+              ))}
               {/* 매니저 선택시 메뉴창 조회 */}
               {users.userType === "MANAGER" ? (
                 <>
@@ -215,19 +227,24 @@ const SignUp = () => {
                     코드 확인
                   </button>
                   <h2>캠퍼스</h2>
-                  <input list="campusList" />
+                  {/* <input list="campusList" />
                   <datalist id="campusList">
                     {data?.map((el) => (
                       <option value={el} />
                     ))}
-                  </datalist>
-                  <input
-                    type="text"
-                    class="block border border-grey-light w-full p-3 rounded mb-4 text-center"
-                    name="userPhoneNumber"
-                    onChange={(e) => onChangeHandler(e)}
-                    placeholder=""
-                  />
+                  </datalist> */}
+                  {data?.map((el) => (
+                    <label>
+                      <input
+                        type="checkbox"
+                        name="campus"
+                        value={el}
+                        onChange={(e) => onCampusListHandler(e)}
+                        placeholder=""
+                      />
+                      {el}
+                    </label>
+                  ))}
                 </>
               ) : null}
               <div className="flex flex-col items-center">
