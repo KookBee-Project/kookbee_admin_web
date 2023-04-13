@@ -8,7 +8,7 @@ import {
 } from "../../store/admin/SignUpSlice";
 
 const SignUp = () => {
-  const { data, companyId } = useSelector((state) => state.signUp);
+  const { data, company } = useSelector((state) => state.signUp);
 
   // 초기값 세팅
   const [users, setUsers] = useState({
@@ -184,9 +184,9 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    dispatch(checkCode(companyId));
-    setUsers({ ...users, companyId: companyId });
-  }, [companyId]);
+    dispatch(checkCode(company.companyId));
+    setUsers({ ...users, companyId: company.companyId });
+  }, [company]);
 
   return (
     <>
@@ -235,6 +235,7 @@ const SignUp = () => {
                     onChange={(e) => onChangeCode(e)}
                     placeholder="회사코드를 입력하세요."
                   />
+                  <h2>{company.companyName}</h2>
                   <button type="button" onClick={onCheckCode}>
                     코드 확인
                   </button>

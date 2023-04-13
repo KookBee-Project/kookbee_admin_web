@@ -3,7 +3,8 @@ import { api } from "../../api/api";
 
 const initialState = {
   data: [],
-  companyId: 0,
+  company: {},
+  signUpRes: "",
   status: "idle",
   error: null,
 };
@@ -25,19 +26,19 @@ export const teacherSignUp = createAsyncThunk(
   }
 );
 
-export const checkCode = createAsyncThunk(
-  "company/companycode",
-  async (companyId) => {
-    const response = await api("POST", "/campus/companyname", { companyId });
+export const getCompany = createAsyncThunk(
+  "campus/companycode",
+  async (code) => {
+    const response = await api("POST", "/company/companycode", code);
     console.log(response.data);
     return response.data;
   }
 );
 
-export const getCompany = createAsyncThunk(
-  "campus/companycode",
-  async (code) => {
-    const response = await api("POST", "/company/companycode", code);
+export const checkCode = createAsyncThunk(
+  "company/companycode",
+  async (companyId) => {
+    const response = await api("POST", "/campus/companyname", { companyId });
     console.log(response.data);
     return response.data;
   }
@@ -54,7 +55,7 @@ const signUp = createSlice({
       .addCase(managerSignUp.fulfilled, (state, action) => {
         state.status = "successed";
         console.log(action.payload);
-        state.data = action.payload;
+        state.signUpRes = action.payload;
       })
       .addCase(managerSignUp.rejected, (state, action) => {
         state.status = "failed";
@@ -66,7 +67,7 @@ const signUp = createSlice({
       .addCase(teacherSignUp.fulfilled, (state, action) => {
         state.status = "successed";
         console.log(action.payload);
-        state.data = action.payload;
+        state.signUpRes = action.payload;
       })
       .addCase(teacherSignUp.rejected, (state, action) => {
         state.status = "failed";
@@ -90,12 +91,13 @@ const signUp = createSlice({
       .addCase(getCompany.fulfilled, (state, action) => {
         state.status = "successed";
         console.log(action.payload);
-        state.companyId = action.payload;
+        state.company = action.payload;
       })
       .addCase(getCompany.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         state.data = [];
+        state.company = {};
       });
   },
 });
