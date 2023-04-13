@@ -3,6 +3,7 @@ import { api } from "../../api/api";
 
 const initialState = {
   data: [],
+  companyId: 0,
   status: "idle",
   error: null,
 };
@@ -10,6 +11,7 @@ const initialState = {
 export const managerSignUp = createAsyncThunk(
   "admin/manager/signup",
   async (manager) => {
+    console.log(manager);
     const response = await api("POST", "/admin/manager/signup", manager);
     return response.data;
   }
@@ -25,13 +27,19 @@ export const teacherSignUp = createAsyncThunk(
 
 export const checkCode = createAsyncThunk(
   "company/companycode",
+  async (companyId) => {
+    const response = await api("POST", "/campus/companyname", { companyId });
+    console.log(response.data);
+    return response.data;
+  }
+);
+
+export const getCompany = createAsyncThunk(
+  "campus/companycode",
   async (code) => {
     const response = await api("POST", "/company/companycode", code);
-    const response2 = await api("POST", "/campus/companyname", {
-      companyId: response.data,
-    });
-    console.log(response2);
-    return response2.data;
+    console.log(response.data);
+    return response.data;
   }
 );
 
@@ -75,6 +83,19 @@ const signUp = createSlice({
       .addCase(checkCode.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(getCompany.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getCompany.fulfilled, (state, action) => {
+        state.status = "successed";
+        console.log(action.payload);
+        state.companyId = action.payload;
+      })
+      .addCase(getCompany.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        state.data = [];
       });
   },
 });

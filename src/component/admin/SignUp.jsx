@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   checkCode,
+  getCompany,
   managerSignUp,
   teacherSignUp,
 } from "../../store/admin/SignUpSlice";
 
 const SignUp = () => {
-  const { data } = useSelector((state) => state.signUp);
+  const { data, companyId } = useSelector((state) => state.signUp);
 
   // 초기값 세팅
   const [users, setUsers] = useState({
@@ -19,7 +20,7 @@ const SignUp = () => {
     userPhoneNumber: "",
     userType: "",
     userStatus: "AVAILABLE",
-    caompanyId: 0,
+    companyId: 0,
     campusList: [],
   });
 
@@ -80,16 +81,22 @@ const SignUp = () => {
       message: userPhoneNumberMessage,
     },
   ];
+
   const onCampusListHandler = (e) => {
-    const {value} = e.target;
-    console.log(value);
-        // setUsers({...users,})
-  }
+    const { value, checked, name } = e.target;
+    if (checked) {
+      setUsers({ ...users, [name]: [...users.campusList, value] });
+    } else {
+      setUsers({
+        ...users,
+        [name]: users.campusList.filter((el) => el != value),
+      });
+    }
+  };
+
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setUsers({ ...users, [name]: value });
-  
-
 
     // 이메일 검사
     const emailRegExp =
@@ -161,6 +168,7 @@ const SignUp = () => {
       dispatch(managerSignUp(users));
     }
     if (users.userType === "TEACHER") {
+      console.log(users);
       dispatch(teacherSignUp(users));
     }
   };
@@ -172,9 +180,13 @@ const SignUp = () => {
 
   const onCheckCode = (e) => {
     e.preventDefault();
-    console.log(code);
-    dispatch(checkCode(code));
+    dispatch(getCompany(code));
   };
+
+  useEffect(() => {
+    dispatch(checkCode(companyId));
+    setUsers({ ...users, companyId: companyId });
+  }, [companyId]);
 
   return (
     <>
@@ -227,17 +239,11 @@ const SignUp = () => {
                     코드 확인
                   </button>
                   <h2>캠퍼스</h2>
-                  {/* <input list="campusList" />
-                  <datalist id="campusList">
-                    {data?.map((el) => (
-                      <option value={el} />
-                    ))}
-                  </datalist> */}
                   {data?.map((el) => (
                     <label>
                       <input
                         type="checkbox"
-                        name="campus"
+                        name="campusList"
                         value={el}
                         onChange={(e) => onCampusListHandler(e)}
                         placeholder=""
