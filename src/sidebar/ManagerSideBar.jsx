@@ -10,18 +10,22 @@ const SideBar = () => {
   ];
 
   return (
-    <div className="w-3/12 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
+    <div className="w-3/12 min-w-10 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
       <div className="flex flex-col items-center mt-20">
         <div className="text-3xl font-bold">강의 관리</div>
         <ul className="list-disc">
-          {classManage?.map((el) => (
-            <li className="list-inside">{el}</li>
+          {classManage?.map((el, idx) => (
+            <li key={idx} className="list-inside">
+              {el}
+            </li>
           ))}
         </ul>
         <div className="text-3xl font-bold mt-10">학생 관리</div>
         <ul className="list-disc">
-          {studentManage?.map((el) => (
-            <li className="list-inside ml-5">{el}</li>
+          {studentManage?.map((el, idx) => (
+            <li key={idx} className="list-inside ml-5">
+              {el}
+            </li>
           ))}
         </ul>
       </div>

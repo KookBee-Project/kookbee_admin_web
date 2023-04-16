@@ -34,11 +34,27 @@ const ClassHistoryList = () => {
       classEnterCode: "fa&dS%65",
       curriculum: "O",
     },
+    {
+      classTitle: "임시과정 15기",
+      classStartDate: "2023-04-16",
+      classEndDate: "2023-10-19",
+      classCampusName: "서초캠퍼스",
+      classEnterCode: "as34r3s6GgSY",
+      curriculum: "O",
+    },
+    {
+      classTitle: "임시과정 5기",
+      classStartDate: "2023-04-16",
+      classEndDate: "2023-10-19",
+      classCampusName: "금천캠퍼스",
+      classEnterCode: "dasf",
+      curriculum: "X",
+    },
   ];
 
   return (
-    <div className="flex flex-col justify-center items-center w-1/2 h-5/6 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
-      <div className="flex flex-col w-11/12 h-5/6">
+    <div className="table items-center w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
+      <div className="flex flex-col items-center w-full h-5/6 mt-10">
         <div className="text-center font-bold text-3xl">강의 내역</div>
         <table className="my-10">
           <thead className="font-bold text-center">

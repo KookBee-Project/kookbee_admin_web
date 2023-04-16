@@ -19,20 +19,24 @@ const ClassCreateForm = () => {
 
   const setInput = (e) => {
     const { name, value } = e.target;
-    setRequest({ ...request, [name]: value });
+    if (name === "classStartDate") {
+      new Date(value) > new Date(request.classEndDate)
+        ? alert("시작일은 종료일보다 이전이어야 합니다.")
+        : setRequest({ ...request, [name]: value });
+    } else if (name === "classEndDate") {
+      new Date(request.classStartDate) > new Date(value)
+        ? alert("종료일은 시작일보다 이후이어야 합니다.")
+        : setRequest({ ...request, [name]: value });
+    } else setRequest({ ...request, [name]: value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (new Date(request.classStartDate) > new Date(request.classEndDate)) {
-      alert("시작일은 종료일보다 이전이어야 합니다.");
-    } else {
-      console.log(request);
-    }
+    console.log(request);
   };
   return (
-    <div className="flex flex-col justify-center w-1/2 h-5/6 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
-      <div className="text-center font-bold text-3xl">강의 등록</div>
+    <div className="table w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
+      <div className="text-center font-bold text-3xl mt-10">강의 등록</div>
       <form onSubmit={onSubmit} className="flex flex-col h-4/5 items-center">
         {classNamenDes?.map((el) => (
           <div className="flex flex-col items-center my-5 w-full">
