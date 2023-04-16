@@ -37,31 +37,34 @@ const ClassHistoryList = () => {
   ];
 
   return (
-    <div className="flex flex-col justify-center w-1/2 h-5/6 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
-      <table className="h-5/6">
-        <thead>
-          <tr>
-            <td>훈련과정명</td>
-            <td>시작일</td>
-            <td>종료일</td>
-            <td>캠퍼스</td>
-            <td>강의 코드</td>
-            <td>커리큘럼</td>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.map((el) => (
+    <div className="flex flex-col justify-center items-center w-1/2 h-5/6 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
+      <div className="flex flex-col w-11/12 h-5/6">
+        <div className="text-center font-bold text-3xl">강의 내역</div>
+        <table className="my-10">
+          <thead className="font-bold text-center">
             <tr>
-              <td>{el.classTitle}</td>
-              <td>{el.classStartDate}</td>
-              <td>{el.classEndDate}</td>
-              <td>{el.classCampusName}</td>
-              <td>{el.classEnterCode}</td>
-              <td>{el.curriculum}</td>
+              <td>훈련과정명</td>
+              <td>시작일</td>
+              <td>종료일</td>
+              <td>캠퍼스</td>
+              <td>강의 코드</td>
+              <td>커리큘럼</td>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="text-center border border-black">
+            {data?.map((el) => (
+              <tr>
+                <td>{el.classTitle}</td>
+                <td>{el.classStartDate}</td>
+                <td>{el.classEndDate}</td>
+                <td>{el.classCampusName}</td>
+                <td>{el.classEnterCode}</td>
+                <td>{el.curriculum}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
