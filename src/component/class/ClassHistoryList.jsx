@@ -70,12 +70,12 @@ const ClassHistoryList = () => {
           <tbody className="text-center border border-black">
             {data?.map((el) => (
               <tr>
-                <td>{el.classTitle}</td>
-                <td>{el.classStartDate}</td>
-                <td>{el.classEndDate}</td>
-                <td>{el.classCampusName}</td>
-                <td>{el.classEnterCode}</td>
-                <td>{el.curriculum}</td>
+                <td className="p-1">{el.classTitle}</td>
+                <td className="p-1">{el.classStartDate}</td>
+                <td className="p-1">{el.classEndDate}</td>
+                <td className="p-1">{el.classCampusName}</td>
+                <td className="p-1">{el.classEnterCode}</td>
+                <td className="p-1">{el.curriculum}</td>
               </tr>
             ))}
           </tbody>

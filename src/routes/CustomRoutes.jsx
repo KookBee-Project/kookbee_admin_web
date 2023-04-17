@@ -13,9 +13,9 @@ const CustomRoute = () => {
         <Route path="/" element={<Main />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/class/manager/create" element={<ClassCreate />} />
-          <Route path="/class/manager/myclass" element={<ClassHistory />} />
-          <Route path="/class/manager/edit" element={<ClassEdit />} />
+          <Route path="/class/open" element={<ClassCreate />} />
+          <Route path="/class" element={<ClassHistory />} />
+          <Route path="/class/edit" element={<ClassEdit />} />
         </Route>
       </Routes>
     </BrowserRouter>

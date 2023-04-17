@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 const ClassEditCurriculumForm = ({ mode, curriculumReq, setCurriculumReq }) => {
   const setInput = (e, idx) => {
     const { name, value } = e.target;
-    console.log(value);
+    // 리스트에서 중간에 있는 json값을 바꾸기 위한 새로운 함수 생성
     const newReq = curriculumReq?.map((el, index) => {
       if (idx === index) {
+        // 시작일이 종료일 보다 늦을경우 알림창 띄워주는 로직
         if (name === "curriculumStartDate") {
           if (new Date(value) > new Date(el.curriculumEndDate)) {
             alert("시작일은 종료일보다 이전이어야 합니다.");
@@ -22,11 +23,11 @@ const ClassEditCurriculumForm = ({ mode, curriculumReq, setCurriculumReq }) => {
       }
       return el;
     });
-    console.log(newReq);
     setCurriculumReq(newReq);
   };
 
-  const addcurriculumReq = () => {
+  // 추가 버튼 클릭 시 커리큘럼 목록 생성
+  const addCurriculumReq = () => {
     setCurriculumReq([
       ...curriculumReq,
       {
@@ -38,12 +39,18 @@ const ClassEditCurriculumForm = ({ mode, curriculumReq, setCurriculumReq }) => {
     ]);
   };
 
+  // 삭제버튼 클릭 시 커리큘럼 목록 삭제
+  const delCurriculumReq = (idx) => {
+    const newReq = curriculumReq?.filter((el, index) => idx != index);
+    setCurriculumReq(newReq);
+  };
+
   return (
-    <div className="table content-center items-center text-center w-10/12">
-      <div>커리큘럼</div>
-      <div className="border border-black">
+    <div className="table content-center items-center w-10/12">
+      <div className="font-bold">커리큘럼</div>
+      <div className="border border-black text-center">
         <table className="w-full border-collapse">
-          <thead>
+          <thead className="font-bold">
             <tr>
               <td>시작일</td>
               <td>종료일</td>
@@ -98,13 +105,20 @@ const ClassEditCurriculumForm = ({ mode, curriculumReq, setCurriculumReq }) => {
                     required
                   />
                 </td>
+                <td
+                  className="hover:cursor-pointer"
+                  onClick={() => delCurriculumReq(idx)}
+                  hidden={mode === "disabled" ? true : false}
+                >
+                  <RiDeleteBinLine />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
         <button
           type="button"
-          onClick={addcurriculumReq}
+          onClick={addCurriculumReq}
           className="px-1 py-1 my-5 bg-yellow-300 border border-black rounded-md text-sm font-bold hover:bg-yellow-200 focus:shadow-none"
           hidden={mode === "disabled" ? true : false}
         >
