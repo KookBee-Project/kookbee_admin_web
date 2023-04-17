@@ -5,6 +5,9 @@ import { useNavigate } from "react-router";
 import { createCurriculum } from "../../store/curriculum/curriculumSlice";
 
 const CurriculumCreateForm = () => {
+  // 서버에서 skillsetData 불러와야 됨
+  const skillsetList = ["JAVA", "ML", "PYTHON"];
+
   const { status, error } = useSelector((state) => state.curriculum);
 
   const [curriculumReq, setCurriculumReq] = useState([
@@ -76,11 +79,10 @@ const CurriculumCreateForm = () => {
   return (
     <div className="table items-center w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
       <div className="flex flex-col items-center w-full h-5/6 mt-10">
-        <div className="text-center font-bold text-3xl">강의 내역</div>
-        <div className="font-bold">커리큘럼</div>
+        <div className="text-center font-bold text-3xl">커리큘럼 등록</div>
         <form
           onSubmit={onSubmit}
-          className="flex flex-col text-center items-center"
+          className="flex flex-col text-center items-center pt-10"
         >
           <table className="w-11/12 border-collapse">
             <thead className="font-bold">
@@ -115,14 +117,23 @@ const CurriculumCreateForm = () => {
                     />
                   </td>
                   <td>
-                    <input
-                      type="text"
+                    <select
                       className="w-full text-center border border-gray-500 rounded-md text-lg p-1"
+                      onChange={(e) => setInput(e, idx)}
                       name="skillSetName"
                       value={el.skillSetName}
-                      onChange={(e) => setInput(e, idx)}
                       required
-                    />
+                    >
+                      {skillsetList?.map((el, idx) => (
+                        <option
+                          key={idx}
+                          value={el}
+                          onChange={(e) => setInput(e, idx)}
+                        >
+                          {el}
+                        </option>
+                      ))}
+                    </select>
                   </td>
                   <td>
                     <input

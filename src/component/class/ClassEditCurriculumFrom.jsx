@@ -1,6 +1,9 @@
 import { RiDeleteBinLine } from "react-icons/ri";
 
 const ClassEditCurriculumForm = ({ mode, curriculumReq, setCurriculumReq }) => {
+  // 서버에서 skillsetData 불러와야 됨
+  const skillsetList = ["JAVA", "ML", "PYTHON"];
+
   const setInput = (e, idx) => {
     const { name, value } = e.target;
     // 리스트에서 중간에 있는 json값을 바꾸기 위한 새로운 함수 생성
@@ -83,16 +86,26 @@ const ClassEditCurriculumForm = ({ mode, curriculumReq, setCurriculumReq }) => {
                     required
                   />
                 </td>
+
                 <td>
-                  <input
-                    type="text"
+                  <select
                     className="w-full text-center border border-black"
+                    onChange={(e) => setInput(e, idx)}
                     name="skillSetName"
                     value={el.skillSetName}
-                    onChange={(e) => setInput(e, idx)}
                     disabled={mode}
                     required
-                  />
+                  >
+                    {skillsetList?.map((el, idx) => (
+                      <option
+                        key={idx}
+                        value={el}
+                        onChange={(e) => setInput(e, idx)}
+                      >
+                        {el}
+                      </option>
+                    ))}
+                  </select>
                 </td>
                 <td>
                   <input

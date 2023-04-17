@@ -30,7 +30,7 @@ const ClassEditForm = () => {
     {
       curriculumStartDate: "2023-10-21",
       curriculumEndDate: "2023-12-20",
-      skillSetName: "Python",
+      skillSetName: "PYTHON",
       teacherId: "tjdanqkr",
     },
   ]);

@@ -22,10 +22,10 @@ export const updateClass = createAsyncThunk(
     return response.data;
   }
 );
-export const updateClassStatus = createAsyncThunk(
+export const deleteClassStatus = createAsyncThunk(
   "/class/status/update",
-  async (request) => {
-    const response = await api("PUT", "/class/status", request);
+  async (classId) => {
+    const response = await api("DELETE", `/class/status/${classId}`);
     return response.data;
   }
 );
@@ -72,13 +72,13 @@ const classSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(updateClassStatus.pending, (state, action) => {
+      .addCase(deleteClassStatus.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(updateClassStatus.fulfilled, (state, action) => {
+      .addCase(deleteClassStatus.fulfilled, (state, action) => {
         state.status = "successed";
       })
-      .addCase(updateClassStatus.rejected, (state, action) => {
+      .addCase(deleteClassStatus.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
