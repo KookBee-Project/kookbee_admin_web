@@ -1,12 +1,19 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createClass } from "../../store/class/classSlice";
+import { useNavigate } from "react-router";
 
 const ClassCreateForm = () => {
+  const { data, status, error } = useSelector((state) => state.bootCamp);
   const [request, setRequest] = useState({
     classTitle: "",
     classDescription: "",
     classStartDate: "",
     classEndDate: "",
   });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const classNamenDes = [
     { label: "훈련과정명", name: "classTitle", value: request.classTitle },
@@ -33,13 +40,18 @@ const ClassCreateForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(request);
+    dispatch(createClass(request));
+    if (status === "successed") {
+      alert("강의 등록에 성공하였습니다.");
+      navigate("/class");
+    } else alert("강의 등록에 실패하였습니다.");
   };
   return (
     <div className="table w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
       <div className="text-center font-bold text-3xl mt-10">강의 등록</div>
       <form onSubmit={onSubmit} className="flex flex-col h-4/5 items-center">
-        {classNamenDes?.map((el) => (
-          <div className="flex flex-col items-center my-5 w-full">
+        {classNamenDes?.map((el, idx) => (
+          <div key={idx} className="flex flex-col items-center my-5 w-full">
             <div className="flex flex-col w-10/12">
               <label htmlFor="classTitle" className="font-bold">
                 {el.label}

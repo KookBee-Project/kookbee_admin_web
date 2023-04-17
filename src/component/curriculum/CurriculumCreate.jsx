@@ -1,15 +1,15 @@
 import ManagerSideBar from "../../sidebar/ManagerSideBar";
-import ClassEditForm from "./ClassEditForm";
+import CurriculumCreateForm from "./CurriculumCreateForm";
 
-const ClassEdit = () => {
+const CurriculumCreate = () => {
   return (
     <div className="w-screen h-screen flex justify-center">
       <div className="flex w-5/6 h-5/6 justify-center">
         <ManagerSideBar />
-        <ClassEditForm />
+        <CurriculumCreateForm />
       </div>
     </div>
   );
 };
 
-export default ClassEdit;
+export default CurriculumCreate;

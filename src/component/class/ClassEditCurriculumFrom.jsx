@@ -15,7 +15,7 @@ const ClassEditCurriculumForm = ({ mode, curriculumReq, setCurriculumReq }) => {
         }
         if (name === "curriculumEndDate") {
           if (new Date(el.curriculumStartDate) > new Date(value)) {
-            alert("시작일은 종료일보다 이전이어야 합니다.");
+            alert("종료일은 시작일보다 이후이어야 합니다.");
             return el;
           }
         }
@@ -119,7 +119,7 @@ const ClassEditCurriculumForm = ({ mode, curriculumReq, setCurriculumReq }) => {
         <button
           type="button"
           onClick={addCurriculumReq}
-          className="px-1 py-1 my-5 bg-yellow-300 border border-black rounded-md text-sm font-bold hover:bg-yellow-200 focus:shadow-none"
+          className="px-1 py-1 my-5 bg-yellow-300 border border-black rounded-md text-sm font-bold hover:bg-yellow-200"
           hidden={mode === "disabled" ? true : false}
         >
           추가

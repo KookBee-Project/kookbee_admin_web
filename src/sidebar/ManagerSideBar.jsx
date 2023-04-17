@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const SideBar = () => {
+const ManagerSideBar = () => {
   const classManage = [
     { value: "강의 개설", link: "/class/open" },
     { value: "강의 내역 조회", link: "/class" },
@@ -38,4 +38,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default ManagerSideBar;

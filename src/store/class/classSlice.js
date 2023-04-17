@@ -3,6 +3,7 @@ import { api } from "../../api/api";
 
 const initialState = {
   data: [],
+  detailData: {},
   status: "idle",
   error: null,
 };
@@ -25,6 +26,20 @@ export const updateClassStatus = createAsyncThunk(
   "/class/status/update",
   async (request) => {
     const response = await api("PUT", "/class/status", request);
+    return response.data;
+  }
+);
+
+export const readClassList = createAsyncThunk("/class/read/list", async () => {
+  const response = await api("GET", "/class");
+  return response.data;
+});
+
+// 바뀔수도 있음
+export const readClassDetail = createAsyncThunk(
+  "/class/read/detail",
+  async (classId) => {
+    const response = await api("GET", `/class/${classId}`);
     return response.data;
   }
 );
@@ -64,6 +79,28 @@ const classSlice = createSlice({
         state.status = "successed";
       })
       .addCase(updateClassStatus.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(readClassList.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(readClassList.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.data = action.payload;
+      })
+      .addCase(readClassList.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(readClassDetail.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(readClassDetail.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.detailData = action.payload;
+      })
+      .addCase(readClassDetail.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });

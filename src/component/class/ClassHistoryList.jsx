@@ -1,5 +1,11 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { readClassList } from "../../store/class/classSlice";
+import { useNavigate } from "react-router";
+
 const ClassHistoryList = () => {
   // 데이터 요청으로 나중에 받아오기 구현
+  // const { data, status, error } = useSelector((state) => state.bootCamp);
   // 이건 임시데이터
   const data = [
     {
@@ -16,7 +22,7 @@ const ClassHistoryList = () => {
       classEndDate: "2023-10-19",
       classCampusName: "금천캠퍼스",
       classEnterCode: "dasf",
-      curriculum: "X",
+      curriculum: "",
     },
     {
       classTitle: "임시과정 9기",
@@ -24,7 +30,7 @@ const ClassHistoryList = () => {
       classEndDate: "2023-10-19",
       classCampusName: "지밸리캠퍼스",
       classEnterCode: "asdff2$",
-      curriculum: "X",
+      curriculum: "",
     },
     {
       classTitle: "임시과정 26기",
@@ -48,9 +54,16 @@ const ClassHistoryList = () => {
       classEndDate: "2023-10-19",
       classCampusName: "금천캠퍼스",
       classEnterCode: "dasf",
-      curriculum: "X",
+      curriculum: "",
     },
   ];
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(readClassList());
+  }, []);
 
   return (
     <div className="table items-center w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
@@ -68,14 +81,32 @@ const ClassHistoryList = () => {
             </tr>
           </thead>
           <tbody className="text-center border border-black">
-            {data?.map((el) => (
-              <tr>
-                <td className="p-1">{el.classTitle}</td>
+            {data?.map((el, idx) => (
+              <tr key={idx}>
+                <td
+                  className="p-1 hover:cursor-pointer"
+                  onClick={() => {
+                    navigate("/class/edit");
+                  }}
+                >
+                  {el.classTitle}
+                </td>
                 <td className="p-1">{el.classStartDate}</td>
                 <td className="p-1">{el.classEndDate}</td>
                 <td className="p-1">{el.classCampusName}</td>
                 <td className="p-1">{el.classEnterCode}</td>
-                <td className="p-1">{el.curriculum}</td>
+                <td className="p-1">
+                  {el.curriculum == "" && (
+                    <button
+                      className="font-bold text-xs border rounded-md p-1 bg-sky-200 hover:bg-sky-100"
+                      onClick={() => {
+                        navigate("/curriculum/create");
+                      }}
+                    >
+                      등록하기
+                    </button>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

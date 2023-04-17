@@ -5,6 +5,7 @@ import SignUp from "../component/admin/SignUp";
 import ClassCreate from "../component/class/ClassCreate";
 import ClassHistory from "../component/class/ClassHistory";
 import ClassEdit from "../component/class/ClassEdit";
+import CurriculumCreate from "../component/curriculum/CurriculumCreate";
 
 const CustomRoute = () => {
   return (
@@ -16,6 +17,7 @@ const CustomRoute = () => {
           <Route path="/class/open" element={<ClassCreate />} />
           <Route path="/class" element={<ClassHistory />} />
           <Route path="/class/edit" element={<ClassEdit />} />
+          <Route path="/curriculum/create" element={<CurriculumCreate />} />
         </Route>
       </Routes>
     </BrowserRouter>

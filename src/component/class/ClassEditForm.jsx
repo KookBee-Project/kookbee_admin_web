@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ClassEditCurriculumForm from "./ClassEditCurriculumFrom";
+import { useDispatch, useSelector } from "react-redux";
+import { readClassDetail } from "../../store/class/classSlice";
+import { readCurriculum } from "../../store/curriculum/curriculumSlice";
 
 const ClassEditForm = () => {
+  // const { data, status, error } = useSelector((state) => state.bootCamp);
+  // const curriculumData = useSelector((state) => state.curriculum.data);
   const [request, setRequest] = useState({
     classTitle: "임시 훈련과정명",
     classDescription: "임시 설명이다",
@@ -32,6 +37,13 @@ const ClassEditForm = () => {
 
   const [mode, setMode] = useState("disabled");
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(readClassDetail());
+    dispatch(readCurriculum());
+  }, []);
+
   const setInput = (e) => {
     const { name, value } = e.target;
     console.log(name, value);
@@ -46,7 +58,8 @@ const ClassEditForm = () => {
     } else setRequest({ ...request, [name]: value });
   };
 
-  const modeChange = () => {
+  const modeChange = (e) => {
+    e.preventDefault();
     mode === "disabled" ? setMode("") : setMode("disabled");
   };
 
