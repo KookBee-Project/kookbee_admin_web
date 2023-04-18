@@ -6,12 +6,10 @@ import ClassCreate from "../component/class/ClassCreate";
 import ClassHistory from "../component/class/ClassHistory";
 import ClassEdit from "../component/class/ClassEdit";
 import CurriculumCreate from "../component/curriculum/CurriculumCreate";
-import BootcampHistory from "../component/homework/Homework";
-import BootcampHistoryList from "../component/homework/BootcampList";
-import ClassHistoryList from "../component/class/ClassHistoryList";
 import Homework from "../component/homework/Homework";
 import BootcampList from "../component/homework/BootcampList";
 import HomeworkList from "../component/homework/HomeworkList";
+import HomeworkDetail from "../component/homework/HomeworkDetail";
 
 const CustomRoute = () => {
   return (
@@ -28,6 +26,7 @@ const CustomRoute = () => {
           <Route path="homework/" element={<Homework />}>
             <Route path="" element={<BootcampList />} />
             <Route path=":bootcampId" element={<HomeworkList />} />
+            <Route path=":bootcampId/:homeworkId" element={<HomeworkDetail />} />
           </Route>
         </Route>
       </Routes>
