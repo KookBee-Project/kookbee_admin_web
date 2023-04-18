@@ -5,6 +5,7 @@ import SignUp from "../component/admin/SignUp";
 import ClassCreate from "../component/class/ClassCreate";
 import ClassHistory from "../component/class/ClassHistory";
 import ClassEdit from "../component/class/ClassEdit";
+import CurriculumCreate from "../component/curriculum/CurriculumCreate";
 import BootcampHistory from "../component/homework/Homework";
 import BootcampHistoryList from "../component/homework/BootcampList";
 import ClassHistoryList from "../component/class/ClassHistoryList";
@@ -22,6 +23,7 @@ const CustomRoute = () => {
           <Route path="/class/open" element={<ClassCreate />} />
           <Route path="/class" element={<ClassHistory />} />
           <Route path="/class/edit" element={<ClassEdit />} />
+          <Route path="/curriculum/create" element={<CurriculumCreate />} />
 
           <Route path="homework/" element={<Homework />}>
             <Route path="" element={<BootcampList />} />
