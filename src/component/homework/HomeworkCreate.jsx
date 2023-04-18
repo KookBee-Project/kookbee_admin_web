@@ -12,15 +12,6 @@ const HomeworkCreate = () => {
     homeworkEndDate: "",
   });
 
-  const classNamenDes = [
-    { label: "훈련과정명", name: "classTitle", value: request.classTitle },
-    {
-      label: "강의 설명",
-      name: "classDescription",
-      value: request.classDescription,
-    },
-  ];
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

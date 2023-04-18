@@ -1,6 +1,12 @@
+import { Link } from "react-router-dom";
+
 const HomeworkAnswerList = () => {
   // homeowrkId로 과제제출목록 불러오기
   // 이건 임시데이터
+  const ids = {
+    bootcampId: "1",
+    homeworkId: "1",
+  };
   const data = [
     {
       homeworkAnswerName: "정유철",
@@ -36,17 +42,29 @@ const HomeworkAnswerList = () => {
             {data?.map((el, idx) => (
               <tr key={idx} className="w-full">
                 <td className="p-1">{idx + 1}</td>
-                <td className="p-1">{el.homeworkAnswerName}</td>
+                <Link
+                  to={`/homework/${ids.bootcampId}/${ids.homeworkId}/${
+                    idx + 1
+                  }`}
+                >
+                  <td className="p-1">{el.homeworkAnswerName}</td>
+                </Link>
                 <td className="p-1">{el.homeworkSummitAt}</td>
                 {el.homeworkRating ? (
                   <td className="p-1">{el.homeworkRating}</td>
                 ) : (
-                  <button
-                    className="bg-yellow-300 border rounded-lg text-base font-bold 
-                 hover:bg-yellow-200 p-0.5"
+                  <Link
+                    to={`/homework/${ids.bootcampId}/${ids.homeworkId}/${
+                      idx + 1
+                    }`}
                   >
-                    평가
-                  </button>
+                    <button
+                      className="bg-yellow-300 border rounded-lg text-base font-bold 
+                 hover:bg-yellow-200 p-0.5"
+                    >
+                      평가
+                    </button>
+                  </Link>
                 )}
               </tr>
             ))}

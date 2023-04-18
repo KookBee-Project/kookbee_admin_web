@@ -14,6 +14,14 @@ export const createHomework = createAsyncThunk(
     return response.data;
   }
 );
+export const createHomeworkComment = createAsyncThunk(
+  "/homeworkComment/create",
+  async (request) => {
+    const response = await api("POST", "/homework/comment", request);
+    return response.data;
+  }
+);
+
 // export const updateCurriculum = createAsyncThunk(
 //   "/curriculum/update",
 //   async (request) => {
@@ -44,6 +52,17 @@ const homeworkSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(createHomework.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(createHomeworkComment.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(createHomeworkComment.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.data = action.payload;
+      })
+      .addCase(createHomeworkComment.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });
