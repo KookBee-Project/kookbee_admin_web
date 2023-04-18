@@ -1,3 +1,6 @@
+import Homework from "./Homework";
+import HomeworkAnswerList from "./HomeworkAnswerList";
+
 const HomeworkDetail = () => {
   const data = {
     homeworkTitle: "별그리기",
@@ -51,6 +54,7 @@ const HomeworkDetail = () => {
             {data.homeworkContent}
           </div>
         </div>
+        <HomeworkAnswerList />
       </div>
     </div>
   );
