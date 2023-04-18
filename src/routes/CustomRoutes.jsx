@@ -10,6 +10,7 @@ import Homework from "../component/homework/Homework";
 import BootcampList from "../component/homework/BootcampList";
 import HomeworkList from "../component/homework/HomeworkList";
 import HomeworkDetail from "../component/homework/HomeworkDetail";
+import HomeworkCreate from "../component/homework/HomeworkCreate";
 
 const CustomRoute = () => {
   return (
@@ -26,7 +27,11 @@ const CustomRoute = () => {
           <Route path="homework/" element={<Homework />}>
             <Route path="" element={<BootcampList />} />
             <Route path=":bootcampId" element={<HomeworkList />} />
-            <Route path=":bootcampId/:homeworkId" element={<HomeworkDetail />} />
+            <Route
+              path=":bootcampId/:homeworkId"
+              element={<HomeworkDetail />}
+            />
+            <Route path="open" element={<HomeworkCreate />} />
           </Route>
         </Route>
       </Routes>
