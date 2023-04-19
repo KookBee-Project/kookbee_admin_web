@@ -4,6 +4,7 @@ import adminSlice from "./admin/adminSlice";
 import SignUpSlice from "./admin/SignUpSlice";
 import classSlice from "./class/classSlice";
 import curriculumSlice from "./curriculum/curriculumSlice";
+import homeworkSlice from "./homework/homeworkSlice";
 
 export default configureStore({
   reducer: {
@@ -11,5 +12,6 @@ export default configureStore({
     signUp: SignUpSlice,
     bootCamp: classSlice,
     curriculum: curriculumSlice,
+    homework: homeworkSlice,
   },
 });
