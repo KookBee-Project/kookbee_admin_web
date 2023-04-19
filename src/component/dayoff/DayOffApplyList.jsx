@@ -48,7 +48,7 @@ const DayOffApplyList = () => {
             {data?.map((el, idx) => (
               <tr key={idx}>
                 <td className="p-1">{idx+1}</td>
-                <Link to={`/homework/${el.bootcampId}`}>
+                <Link to={`/dayoff/${el.studentName}`}>
                   <td className="p-1">{el.campusName}</td>
                 </Link>
                 <td className="p-1">{el.bootcampName}</td>

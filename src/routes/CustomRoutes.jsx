@@ -14,6 +14,7 @@ import HomeworkCreate from "../component/homework/HomeworkCreate";
 import HomeworkAnswerDetail from "../component/homework/HomeworkAnswerDetail";
 import DayOffApplyList from "../component/dayoff/DayOffApplyList";
 import DayOff from "../component/dayoff/DayOff";
+import DayOffApplyDetail from "../component/dayoff/DayOffApplyDetail";
 
 const CustomRoute = () => {
   return (
@@ -42,6 +43,7 @@ const CustomRoute = () => {
           </Route>
           <Route path="dayoff/" element={<DayOff />}>
             <Route path="" element={<DayOffApplyList />} />
+            <Route path=":studentName" element={<DayOffApplyDetail />} />
           </Route>
         </Route>
       </Routes>
