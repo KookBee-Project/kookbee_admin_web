@@ -80,6 +80,8 @@ const ClassEditCurriculumForm = ({
                 <td>
                   <input
                     type="date"
+                    min={bootcampStartDate}
+                    max={bootcampEndDate}
                     className="w-full text-center border border-black"
                     name="curriculumStartDate"
                     value={el.curriculumStartDate}
@@ -91,6 +93,8 @@ const ClassEditCurriculumForm = ({
                 <td>
                   <input
                     type="date"
+                    min={bootcampStartDate}
+                    max={bootcampEndDate}
                     className="w-full text-center border border-black"
                     name="curriculumEndDate"
                     value={el.curriculumEndDate}

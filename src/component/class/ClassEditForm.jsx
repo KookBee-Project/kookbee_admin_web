@@ -32,12 +32,12 @@ const ClassEditForm = () => {
   const setInput = (e) => {
     const { name, value } = e.target;
     console.log(name, value);
-    if (name === "classStartDate") {
-      new Date(value) > new Date(request.classEndDate)
+    if (name === "bootcampStartDate") {
+      new Date(value) > new Date(request.bootcampEndDate)
         ? alert("시작일은 종료일보다 이전이어야 합니다.")
         : setRequest({ ...request, [name]: value });
-    } else if (name === "classEndDate") {
-      new Date(request.classStartDate) > new Date(value)
+    } else if (name === "bootcampEndDate") {
+      new Date(request.bootcampStartDate) > new Date(value)
         ? alert("종료일은 시작일보다 이후이어야 합니다.")
         : setRequest({ ...request, [name]: value });
     } else setRequest({ ...request, [name]: value });
@@ -52,9 +52,9 @@ const ClassEditForm = () => {
     e.preventDefault();
     console.log(request);
     console.log(curriculumReq);
-    alert("수정사항이 저장되었습니다");
-    setMode("disabled");
   };
+
+  useEffect(() => {}, [status]);
 
   const delBootCamp = () => {
     // 클래스 id랑 status보내주기
@@ -73,14 +73,14 @@ const ClassEditForm = () => {
       <div className="text-center font-bold text-3xl mt-10">강의 수정</div>
       <form onSubmit={onSubmit} className="flex flex-col h-4/5 items-center">
         <div className="flex flex-col my-5 w-10/12">
-          <label htmlFor="classTitle" className="font-bold">
+          <label htmlFor="bootcampTitle" className="font-bold">
             훈련과정명
           </label>
           <input
             type="text"
             className="border-2 border-gray-400 p-1 rounded-lg text-xl"
-            name="classTitle"
-            id="classTitle"
+            name="bootcampTitle"
+            id="bootcampTitle"
             value={request.bootcampTitle}
             onChange={setInput}
             required
@@ -88,13 +88,13 @@ const ClassEditForm = () => {
           />
         </div>
         <div className="flex flex-col my-5 w-10/12">
-          <label htmlFor="classDescription" className="font-bold">
+          <label htmlFor="bootcampDescription" className="font-bold">
             강의 설명
           </label>
           <textarea
             className="resize-none border-2 border-gray-400 p-1 rounded-lg text-xl"
-            name="classDescription"
-            id="classDescription"
+            name="bootcampDescription"
+            id="bootcampDescription"
             value={request.bootcampDescription}
             onChange={setInput}
             required
@@ -105,14 +105,14 @@ const ClassEditForm = () => {
           <div className="font-bold mb-2">강의 기간</div>
           <div className="flex justify-between">
             <div className="flex flex-col w-2/5">
-              <label htmlFor="classStartDate" className="font-bold">
+              <label htmlFor="bootcampStartDate" className="font-bold">
                 시작일
               </label>
               <input
                 type="date"
                 className="border-2 border-gray-400 p-1 rounded-lg text-xl"
-                name="classStartDate"
-                id="classStartDate"
+                name="bootcampStartDate"
+                id="bootcampStartDate"
                 value={request.bootcampStartDate}
                 onChange={setInput}
                 required
@@ -120,14 +120,14 @@ const ClassEditForm = () => {
               />
             </div>
             <div className="flex flex-col w-2/5">
-              <label htmlFor="classEndDate" className="font-bold">
+              <label htmlFor="bootcampEndDate" className="font-bold">
                 종료일
               </label>
               <input
                 type="date"
                 className="border-2 border-gray-400 p-1 rounded-lg text-xl"
-                name="classEndDate"
-                id="classEndDate"
+                name="bootcampEndDate"
+                id="bootcampEndDate"
                 value={request.bootcampEndDate}
                 onChange={setInput}
                 required

@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api } from "../../api/api";
-import { classServiceApi } from "../../api/classServiceApi";
+import { api_bootcamp } from "../../api/api";
 
 const initialState = {
   data: [],
@@ -12,25 +11,21 @@ const initialState = {
 export const createBootcamp = createAsyncThunk(
   "/bootcamp/create",
   async (request) => {
-    const response = await classServiceApi("POST", "/bootcamp", request);
+    const response = await api_bootcamp("POST", "/bootcamp", request);
     return response.data;
   }
 );
 export const updateBootcamp = createAsyncThunk(
   "/bootcamp/update",
   async (request) => {
-    const response = await classServiceApi("PUT", "/bootcamp", request);
+    const response = await api_bootcamp("PUT", "/bootcamp", request);
     return response.data;
   }
 );
 export const deleteBootcampStatus = createAsyncThunk(
   "/bootcamp/status/update",
   async (request) => {
-    const response = await classServiceApi(
-      "DELETE",
-      `/bootcamp/status/`,
-      request
-    );
+    const response = await api_bootcamp("DELETE", `/bootcamp/status/`, request);
     return response.data;
   }
 );
@@ -38,7 +33,7 @@ export const deleteBootcampStatus = createAsyncThunk(
 export const readBootcampList = createAsyncThunk(
   "/bootcamp/read/list",
   async () => {
-    const response = await classServiceApi("GET", "/bootcamp/manager");
+    const response = await api_bootcamp("GET", "/bootcamp/manager");
     return response.data;
   }
 );
@@ -47,7 +42,7 @@ export const readBootcampList = createAsyncThunk(
 export const readBootcampDetail = createAsyncThunk(
   "/bootcamp/read/detail",
   async (bootcampId) => {
-    const response = await classServiceApi("GET", `/bootcamp/${bootcampId}`);
+    const response = await api_bootcamp("GET", `/bootcamp/${bootcampId}`);
     console.log(response.data);
     return response.data;
   }

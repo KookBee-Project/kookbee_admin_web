@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api } from "../../api/api";
+import { api_user } from "../../api/api";
 
 const initialState = {
   data: {},
@@ -7,9 +7,13 @@ const initialState = {
   error: null,
 };
 
-export const login = createAsyncThunk("/user/login", async (user) => {
-  const response = await api("POST", "/user/login", user);
-  return response.data;
+export const login = createAsyncThunk("/user/login", async (user, thunkAPI) => {
+  try {
+    const response = await api_user("POST", "/user/login", user);
+    return response.data;
+  } catch (err) {
+    return thunkAPI.rejectWithValue(err.response);
+  }
 });
 
 const adminSlice = createSlice({
@@ -36,7 +40,7 @@ const adminSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.payload.data;
       });
   },
 });

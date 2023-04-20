@@ -52,7 +52,12 @@ const ClassHistoryList = () => {
                     <button
                       className="font-bold text-xs border rounded-md p-1 bg-sky-200 hover:bg-sky-100"
                       onClick={() => {
-                        navigate("/curriculum/create");
+                        navigate(`/curriculum/create/${el.bootcampId}`, {
+                          state: {
+                            bootcampStartDate: el.bootcampStartDate,
+                            bootcampEndDate: el.bootcampEndDate,
+                          },
+                        });
                       }}
                     >
                       등록하기

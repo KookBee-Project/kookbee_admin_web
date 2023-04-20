@@ -1,26 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { createCurriculum } from "../../store/curriculum/curriculumSlice";
+import { useParams, useLocation } from "react-router-dom";
+import { getSkillSetList } from "../../store/skillSet/skillSetSlice";
 
 const CurriculumCreateForm = () => {
   // 서버에서 skillsetData 불러와야 됨
-  const skillsetList = ["JAVA", "ML", "PYTHON"];
-
+  const skillsetList = useSelector((state) => state.skillSet.data);
   const { status, error } = useSelector((state) => state.curriculum);
-
-  const [curriculumReq, setCurriculumReq] = useState([
-    {
-      curriculumStartDate: "",
-      curriculumEndDate: "",
-      skillSetName: "",
-      teacherId: "",
-    },
-  ]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { bootcampStartDate, bootcampEndDate } = useLocation().state;
+  const param = useParams();
+
+  const [curriculumReq, setCurriculumReq] = useState([
+    {
+      bootcampId: param.bootcampId,
+      teacherEmail: "",
+      curriculumStartDate: "",
+      curriculumEndDate: "",
+      skillSetId: "",
+      curriculumStatus: "PROCEEDING",
+    },
+  ]);
+
+  useEffect(() => {
+    dispatch(getSkillSetList());
+  }, []);
 
   const setInput = (e, idx) => {
     const { name, value } = e.target;
@@ -52,10 +61,12 @@ const CurriculumCreateForm = () => {
     setCurriculumReq([
       ...curriculumReq,
       {
+        bootcampId: param.bootcampId,
+        teacherEmail: "",
         curriculumStartDate: "",
         curriculumEndDate: "",
-        skillSetName: "",
-        teacherId: "",
+        skillSetId: "",
+        curriculumStatus: "PROCEEDING",
       },
     ]);
   };
@@ -69,12 +80,15 @@ const CurriculumCreateForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(curriculumReq);
-    dispatch(createCurriculum());
+    dispatch(createCurriculum(curriculumReq));
+  };
+
+  useEffect(() => {
     if (status === "successed") {
       alert("커리큘럼 등록에 성공하였습니다.");
-      navigate("/class/edit");
-    } else alert("커리큘럼 등록에 실패하였습니다.");
-  };
+      navigate("/bootcamp/edit");
+    } else if (status === "failed") alert("커리큘럼 등록에 실패하였습니다."); // 나중에 에러메세지
+  });
 
   return (
     <div className="table items-center w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
@@ -99,6 +113,8 @@ const CurriculumCreateForm = () => {
                   <td>
                     <input
                       type="date"
+                      min={bootcampStartDate}
+                      max={bootcampEndDate}
                       className="w-full text-center border border-gray-500 rounded-md text-lg p-1"
                       name="curriculumStartDate"
                       value={el.curriculumStartDate}
@@ -109,6 +125,8 @@ const CurriculumCreateForm = () => {
                   <td>
                     <input
                       type="date"
+                      min={bootcampStartDate}
+                      max={bootcampEndDate}
                       className="w-full text-center border border-gray-500 rounded-md text-lg p-1"
                       name="curriculumEndDate"
                       value={el.curriculumEndDate}
@@ -120,17 +138,17 @@ const CurriculumCreateForm = () => {
                     <select
                       className="w-full text-center border border-gray-500 rounded-md text-lg p-1"
                       onChange={(e) => setInput(e, idx)}
-                      name="skillSetName"
-                      value={el.skillSetName}
+                      name="skillSetId"
+                      value={el.skillSetId}
                       required
                     >
                       {skillsetList?.map((el, idx) => (
                         <option
                           key={idx}
-                          value={el}
+                          value={el.id}
                           onChange={(e) => setInput(e, idx)}
                         >
-                          {el}
+                          {el.skillSetName}
                         </option>
                       ))}
                     </select>
@@ -139,8 +157,8 @@ const CurriculumCreateForm = () => {
                     <input
                       type="text"
                       className="w-full text-center border border-gray-500 rounded-md text-lg p-1"
-                      name="teacherId"
-                      value={el.teacherId}
+                      name="teacherEmail"
+                      value={el.teacherEmail}
                       onChange={(e) => setInput(e, idx)}
                       required
                     />

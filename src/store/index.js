@@ -5,6 +5,7 @@ import SignUpSlice from "./admin/SignUpSlice";
 import curriculumSlice from "./curriculum/curriculumSlice";
 import campusSlice from "./campus/campusSlice";
 import bootcampSlice from "./bootcamp/bootcampSlice";
+import skillSetSlice from "./skillSet/skillSetSlice";
 
 export default configureStore({
   reducer: {
@@ -13,5 +14,6 @@ export default configureStore({
     bootCamp: bootcampSlice,
     curriculum: curriculumSlice,
     campus: campusSlice,
+    skillSet: skillSetSlice,
   },
 });

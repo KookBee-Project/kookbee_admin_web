@@ -62,7 +62,7 @@ const ClassCreateForm = () => {
       dispatch(createBootcamp(request));
       if (status === "successed") {
         alert("강의 등록에 성공하였습니다.");
-        navigate("/class");
+        navigate("/bootcamp");
       } else alert("강의 등록에 실패하였습니다.");
     }
   };
