@@ -12,6 +12,11 @@ import HomeworkList from "../component/homework/HomeworkList";
 import HomeworkDetail from "../component/homework/HomeworkDetail";
 import HomeworkCreate from "../component/homework/HomeworkCreate";
 import HomeworkAnswerDetail from "../component/homework/HomeworkAnswerDetail";
+import Product from "../component/product/Product";
+import BootcampListForProduct from "../component/product/BootcampListForProduct";
+import ProductList from "../component/product/ProductList";
+import ProductCreate from "../component/product/ProductCreate";
+import ProductDetail from "../component/product/ProductDetail";
 
 const CustomRoute = () => {
   return (
@@ -36,6 +41,18 @@ const CustomRoute = () => {
               path=":bootcampId/:homeworkId/:homeworkAnswerId"
               element={<HomeworkAnswerDetail />}
             />
+            <Route path="open" element={<HomeworkCreate />} />
+          </Route>
+
+          <Route path="product/" element={<Product />}>
+            <Route path="" element={<BootcampListForProduct />} />
+            <Route path=":bootcampId" element={<ProductList />} />
+            <Route path="insert" element={<ProductCreate />} />
+            <Route path=":bootcampId/:productId" element={<ProductDetail />} />
+            {/* <Route
+              path=":bootcampId/:homeworkId/:homeworkAnswerId"
+              element={<HomeworkAnswerDetail />}
+            /> */}
             <Route path="open" element={<HomeworkCreate />} />
           </Route>
         </Route>
