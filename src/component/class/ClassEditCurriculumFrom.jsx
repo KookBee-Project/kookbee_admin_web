@@ -1,6 +1,12 @@
 import { RiDeleteBinLine } from "react-icons/ri";
 
-const ClassEditCurriculumForm = ({ mode, curriculumReq, setCurriculumReq }) => {
+const ClassEditCurriculumForm = ({
+  mode,
+  curriculumReq,
+  setCurriculumReq,
+  bootcampStartDate,
+  bootcampEndDate,
+}) => {
   // 서버에서 skillsetData 불러와야 됨
   const skillsetList = ["JAVA", "ML", "PYTHON"];
 
@@ -9,16 +15,23 @@ const ClassEditCurriculumForm = ({ mode, curriculumReq, setCurriculumReq }) => {
     // 리스트에서 중간에 있는 json값을 바꾸기 위한 새로운 함수 생성
     const newReq = curriculumReq?.map((el, index) => {
       if (idx === index) {
-        // 시작일이 종료일 보다 늦을경우 알림창 띄워주는 로직
+        // 시작일 검증
         if (name === "curriculumStartDate") {
           if (new Date(value) > new Date(el.curriculumEndDate)) {
             alert("시작일은 종료일보다 이전이어야 합니다.");
             return el;
+          } else if (new Date(value) < new Date(bootcampStartDate)) {
+            alert("강의 시작일보다 이후이어야 합니다.");
+            return el;
           }
         }
+        // 종료일 검증
         if (name === "curriculumEndDate") {
           if (new Date(el.curriculumStartDate) > new Date(value)) {
             alert("종료일은 시작일보다 이후이어야 합니다.");
+            return el;
+          } else if (new Date(value) > new Date(bootcampEndDate)) {
+            alert("강의 종료일보다 이전이어야 합니다.");
             return el;
           }
         }

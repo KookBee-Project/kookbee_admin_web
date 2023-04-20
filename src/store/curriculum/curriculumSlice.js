@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../../api/api";
+import { classServiceApi } from "../../api/classServiceApi";
 
 const initialState = {
   data: [],
@@ -24,14 +25,15 @@ export const updateCurriculum = createAsyncThunk(
 
 export const readCurriculum = createAsyncThunk(
   "/curriculum/read",
-  async (classId) => {
-    const response = await api("GET", `/curriculum/${classId}`);
+  async (bootcampId) => {
+    const response = await classServiceApi("GET", `/curriculum/${bootcampId}`);
+    console.log(response.data);
     return response.data;
   }
 );
 
 const curriculumSlice = createSlice({
-  name: "admin",
+  name: "curriculum",
   initialState,
   reducers: {},
   extraReducers(builder) {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/admin/adminSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { data, state, error } = useSelector((state) => state.admin);
@@ -11,6 +11,7 @@ const Login = () => {
     userPw: "",
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -20,6 +21,7 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(login(request));
+    navigate("/bootcamp");
   };
 
   return (
