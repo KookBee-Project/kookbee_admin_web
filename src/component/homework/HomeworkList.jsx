@@ -1,6 +1,9 @@
+import { Link } from "react-router-dom";
+
 const HomeworkList = () => {
-  // 데이터 요청으로 나중에 받아오기 구현
+  // 부트캠프Id로 과제목록 불러오기
   // 이건 임시데이터
+  const bootcampId = "1";
   const data = [
     {
       homeworkId: 1,
@@ -49,7 +52,9 @@ const HomeworkList = () => {
           <tbody className="text-center border border-black">
             {data?.map((el) => (
               <tr key={el.homeworkId}>
-                <td className="p-1">{el.homeworkTitle}</td>
+                <Link to={`/homework/${bootcampId}/${el.homeworkId}`}>
+                  <td className="p-1">{el.homeworkTitle}</td>
+                </Link>
                 <td className="p-1">{el.homeworkStartDate}</td>
                 <td className="p-1">{el.homeworkEndDate}</td>
                 <td className="p-1">{el.homeworkSkillSet}</td>
@@ -59,6 +64,16 @@ const HomeworkList = () => {
             ))}
           </tbody>
         </table>
+        <div className="flex w-10/12 justify-end">
+          <Link to={"/homework/open"}>
+            <button
+              className="px-5 py-3 my-5 bg-yellow-300 border rounded-xl text-xl font-bold 
+        shadow-md shadow-gray-400 hover:bg-yellow-200 focus:shadow-none right"
+            >
+              과제등록
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );

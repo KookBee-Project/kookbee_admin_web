@@ -6,12 +6,15 @@ import ClassCreate from "../component/class/ClassCreate";
 import ClassHistory from "../component/class/ClassHistory";
 import ClassEdit from "../component/class/ClassEdit";
 import CurriculumCreate from "../component/curriculum/CurriculumCreate";
-import BootcampHistory from "../component/homework/Homework";
-import BootcampHistoryList from "../component/homework/BootcampList";
-import ClassHistoryList from "../component/class/ClassHistoryList";
 import Homework from "../component/homework/Homework";
 import BootcampList from "../component/homework/BootcampList";
 import HomeworkList from "../component/homework/HomeworkList";
+import HomeworkDetail from "../component/homework/HomeworkDetail";
+import HomeworkCreate from "../component/homework/HomeworkCreate";
+import HomeworkAnswerDetail from "../component/homework/HomeworkAnswerDetail";
+import DayOffApplyList from "../component/dayoff/DayOffApplyList";
+import DayOff from "../component/dayoff/DayOff";
+import DayOffApplyDetail from "../component/dayoff/DayOffApplyDetail";
 
 const CustomRoute = () => {
   return (
@@ -31,6 +34,19 @@ const CustomRoute = () => {
           <Route path="homework/" element={<Homework />}>
             <Route path="" element={<BootcampList />} />
             <Route path=":bootcampId" element={<HomeworkList />} />
+            <Route
+              path=":bootcampId/:homeworkId"
+              element={<HomeworkDetail />}
+            />
+            <Route
+              path=":bootcampId/:homeworkId/:homeworkAnswerId"
+              element={<HomeworkAnswerDetail />}
+            />
+            <Route path="open" element={<HomeworkCreate />} />
+          </Route>
+          <Route path="dayoff/" element={<DayOff />}>
+            <Route path="" element={<DayOffApplyList />} />
+            <Route path=":studentName" element={<DayOffApplyDetail />} />
           </Route>
         </Route>
       </Routes>

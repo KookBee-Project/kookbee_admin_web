@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const BootcampList = () => {
-  // 데이터 요청으로 나중에 받아오기 구현
+  // 강사의 userId로 클래스 정보 불러오기
   // 이건 임시데이터
   const data = [
     {
