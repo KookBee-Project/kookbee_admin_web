@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api } from "../../api/api";
+import { api, api_bootcamp } from "../../api/api";
 
 const initialState = {
   data: [],
@@ -10,7 +10,7 @@ const initialState = {
 export const updateDayOffStasus = createAsyncThunk(
   "/dayoff/create",
   async (request) => {
-    const response = await api("POST", "/dayoff", request);
+    const response = await api_bootcamp("POST", "/dayoff", request);
     return response.data;
   }
 );

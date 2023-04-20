@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api } from "../../api/api";
+import { api, api_bootcamp } from "../../api/api";
 
 const initialState = {
   data: [],
@@ -10,14 +10,14 @@ const initialState = {
 export const createHomework = createAsyncThunk(
   "/homework/create",
   async (request) => {
-    const response = await api("POST", "/homework", request);
+    const response = await api_bootcamp("POST", "/homework", request);
     return response.data;
   }
 );
 export const createHomeworkComment = createAsyncThunk(
   "/homeworkComment/create",
   async (request) => {
-    const response = await api("POST", "/homework/comment", request);
+    const response = await api_bootcamp("POST", "/homework/comment", request);
     return response.data;
   }
 );

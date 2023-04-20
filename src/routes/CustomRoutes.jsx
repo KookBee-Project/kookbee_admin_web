@@ -60,9 +60,10 @@ const CustomRoute = () => {
               element={<HomeworkAnswerDetail />}
             /> */}
             <Route path="open" element={<HomeworkCreate />} />
-          <Route path="dayoff/" element={<DayOff />}>
-            <Route path="" element={<DayOffApplyList />} />
-            <Route path=":studentName" element={<DayOffApplyDetail />} />
+            <Route path="dayoff/" element={<DayOff />}>
+              <Route path="" element={<DayOffApplyList />} />
+              <Route path=":studentName" element={<DayOffApplyDetail />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
