@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 const ManagerSideBar = () => {
   const classManage = [
-    { value: "강의 개설", link: "/class/open" },
-    { value: "강의 내역 조회", link: "/class" },
+    { value: "강의 개설", link: "/bootcamp/open" },
+    { value: "강의 내역 조회", link: "/bootcamp" },
   ];
   const studentManage = [
     { value: "공지사항", link: "" },

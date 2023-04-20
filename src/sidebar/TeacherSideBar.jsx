@@ -14,8 +14,8 @@ const TeacherSideBar = () => {
     { value: "강의 평가", link: "" },
   ];
   const homeworkManage = [
-    { value: "전체 목록 보기", link: "" },
-    { value: "등록하기", link: "" },
+    { value: "전체 목록 보기", link: "/homework" },
+    { value: "등록하기", link: "/homework/open" },
   ];
 
   return (

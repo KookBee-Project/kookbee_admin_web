@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/admin/adminSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { data, state, error } = useSelector((state) => state.admin);
+  const { data, status, error } = useSelector((state) => state.admin);
 
   const [request, setRequest] = useState({
     userEmail: "",
     userPw: "",
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -21,6 +22,11 @@ const Login = () => {
     e.preventDefault();
     dispatch(login(request));
   };
+
+  useEffect(() => {
+    if (status === "failed") alert(error);
+    else if (status === "successed") navigate("/bootcamp");
+  }, [status]);
 
   return (
     <div className="h-screen flex justify-center items-center">
