@@ -10,7 +10,7 @@ const ManagerSideBar = () => {
     { value: "QnA", link: "" },
     { value: "출석 & 수강 관리", link: "" },
     { value: "휴가 관리", link: "" },
-    { value: "물품 관리", link: "" },
+    { value: "물품 관리", link: "/product" },
     { value: "강의 평가", link: "" },
   ];
 
