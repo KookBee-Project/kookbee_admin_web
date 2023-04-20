@@ -23,10 +23,13 @@ const CustomRoute = () => {
         <Route path="/" element={<Main />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/class/open" element={<ClassCreate />} />
-          <Route path="/class" element={<ClassHistory />} />
-          <Route path="/class/edit" element={<ClassEdit />} />
-          <Route path="/curriculum/create" element={<CurriculumCreate />} />
+          <Route path="/bootcamp/open" element={<ClassCreate />} />
+          <Route path="/bootcamp" element={<ClassHistory />} />
+          <Route path="/bootcamp/edit/:bootcampId" element={<ClassEdit />} />
+          <Route
+            path="/curriculum/create/:bootcampId"
+            element={<CurriculumCreate />}
+          />
 
           <Route path="homework/" element={<Homework />}>
             <Route path="" element={<BootcampList />} />
