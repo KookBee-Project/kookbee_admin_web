@@ -6,7 +6,7 @@ const ManagerSideBar = () => {
     { value: "강의 내역 조회", link: "/bootcamp" },
   ];
   const studentManage = [
-    { value: "공지사항", link: "" },
+    { value: "공지사항", link: "/notification" },
     { value: "QnA", link: "" },
     { value: "출석 & 수강 관리", link: "" },
     { value: "휴가 관리", link: "" },

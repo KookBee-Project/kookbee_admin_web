@@ -11,9 +11,9 @@ const ProductCreate = () => {
     productTitle: "",
     productAvailableAmount: 99,
     productOutAmount: 0,
-    productStartDate: "",
+    productStartDate: "", 
     productEndDate: "",
-  });
+  })
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

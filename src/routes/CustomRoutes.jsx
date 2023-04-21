@@ -20,6 +20,11 @@ import ProductDetail from "../component/product/ProductDetail";
 import DayOffApplyList from "../component/dayoff/DayOffApplyList";
 import DayOff from "../component/dayoff/DayOff";
 import DayOffApplyDetail from "../component/dayoff/DayOffApplyDetail";
+import BootcampListForNotification from "../component/notification/BootcampListForNotification";
+import Notification from "../component/notification/Notification";
+import NotificationList from "../component/notification/NotificationList";
+import NotificationCreate from "../component/notification/NotificationCreate";
+import NotificationDetail from "../component/notification/NotificationDetail";
 
 const CustomRoute = () => {
   return (
@@ -55,15 +60,21 @@ const CustomRoute = () => {
             <Route path=":bootcampId" element={<ProductList />} />
             <Route path="insert" element={<ProductCreate />} />
             <Route path=":bootcampId/:productId" element={<ProductDetail />} />
-            {/* <Route
-              path=":bootcampId/:homeworkId/:homeworkAnswerId"
-              element={<HomeworkAnswerDetail />}
-            /> */}
-            <Route path="open" element={<HomeworkCreate />} />
-            <Route path="dayoff/" element={<DayOff />}>
-              <Route path="" element={<DayOffApplyList />} />
-              <Route path=":studentName" element={<DayOffApplyDetail />} />
-            </Route>
+          </Route>
+
+          <Route path="notification/" element={<Notification />}>
+            <Route path="" element={<BootcampListForNotification />} />
+            <Route path=":bootcampId" element={<NotificationList />} />
+            <Route path="insert" element={<NotificationCreate />} />
+            <Route
+              path=":bootcampId/:notificationId"
+              element={<NotificationDetail />}
+            />
+          </Route>
+
+          <Route path="dayoff/" element={<DayOff />}>
+            <Route path="" element={<DayOffApplyList />} />
+            <Route path=":studentName" element={<DayOffApplyDetail />} />
           </Route>
         </Route>
       </Routes>
