@@ -60,8 +60,8 @@ const NotificationList = () => {
       notificationDate: "2023-04-16",
       notificationLikeCounts: 100,
       notificationRepleCounts: 200,
-    //   이미지는 클라우드에 올라가있는 url로 받아오면 될듯?
-    //   google 어쩌구 주소 + uuid 형식?
+      //   이미지는 클라우드에 올라가있는 url로 받아오면 될듯?
+      //   google 어쩌구 주소 + uuid 형식?
       imageUrl:
         "https://i.namu.wiki/i/i5sBDwFlA-k-V_dw5KkNucxogplFUiiDKlqqNQKwtT5BBPG3ztU90g6jsudSBUlFV6KLCJWhb2DXownryg9hjCZqf_OGSD6bwkuyOGXwFTanWJZXHMvZ5IK-OOGvVSb5Rf8lzoZ2PXWeNQ1Rfx3oQQ.webp",
     },
@@ -78,9 +78,14 @@ const NotificationList = () => {
             >
               <div className="flex gap-x-4">
                 <div className="min-w-0 flex-auto">
-                  <p className="text-m  font-bold leading-6 text-gray-900">
-                    {data.notificationTitle}
-                  </p>
+                  <Link
+                    to={`/notification/${bootcampId}/${data.notificationId}`}
+                  >
+                    <p className="text-m  font-bold leading-6 text-gray-900">
+                      {data.notificationTitle}
+                    </p>
+                  </Link>
+
                   <br />
                   <p className="mt-1 truncate text-xs leading-5 text-gray-500">
                     {/* 이부분은 백에서 전달할때 response 에서 짜르는걸로... */}

@@ -24,6 +24,7 @@ import BootcampListForNotification from "../component/notification/BootcampListF
 import Notification from "../component/notification/Notification";
 import NotificationList from "../component/notification/NotificationList";
 import NotificationCreate from "../component/notification/NotificationCreate";
+import NotificationDetail from "../component/notification/NotificationDetail";
 
 const CustomRoute = () => {
   return (
@@ -65,7 +66,10 @@ const CustomRoute = () => {
             <Route path="" element={<BootcampListForNotification />} />
             <Route path=":bootcampId" element={<NotificationList />} />
             <Route path="insert" element={<NotificationCreate />} />
-            <Route path=":bootcampId/:productId" element={<ProductDetail />} />
+            <Route
+              path=":bootcampId/:notificationId"
+              element={<NotificationDetail />}
+            />
           </Route>
 
           <Route path="dayoff/" element={<DayOff />}>
