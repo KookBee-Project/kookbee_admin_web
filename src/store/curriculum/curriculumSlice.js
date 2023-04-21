@@ -4,6 +4,7 @@ import { api_bootcamp } from "../../api/api";
 const initialState = {
   data: [],
   status: "idle",
+  readStatus: "idle",
   error: null,
 };
 
@@ -60,14 +61,14 @@ const curriculumSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(readCurriculum.pending, (state, action) => {
-        state.status = "loading";
+        state.readStatus = "loading";
       })
       .addCase(readCurriculum.fulfilled, (state, action) => {
-        state.status = "successed";
+        state.readStatus = "successed";
         state.data = action.payload;
       })
       .addCase(readCurriculum.rejected, (state, action) => {
-        state.status = "failed";
+        state.readStatus = "failed";
         state.error = action.error.message;
       });
   },

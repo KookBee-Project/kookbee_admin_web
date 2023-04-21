@@ -13,16 +13,18 @@ const CurriculumCreateForm = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { bootcampStartDate, bootcampEndDate } = useLocation().state;
+  const { bootcampStartDate, bootcampEndDate, bootcampId } =
+    useLocation().state;
   const param = useParams();
 
   const [curriculumReq, setCurriculumReq] = useState([
     {
+      curriculumName: "",
       bootcampId: param.bootcampId,
       teacherEmail: "",
       curriculumStartDate: "",
       curriculumEndDate: "",
-      skillSetId: "",
+      skillSetId: 1,
       curriculumStatus: "PROCEEDING",
     },
   ]);
@@ -61,11 +63,12 @@ const CurriculumCreateForm = () => {
     setCurriculumReq([
       ...curriculumReq,
       {
+        curriculumName: "",
         bootcampId: param.bootcampId,
         teacherEmail: "",
         curriculumStartDate: "",
         curriculumEndDate: "",
-        skillSetId: "",
+        skillSetId: 1,
         curriculumStatus: "PROCEEDING",
       },
     ]);
@@ -84,11 +87,11 @@ const CurriculumCreateForm = () => {
   };
 
   useEffect(() => {
-    if (status === "successed") {
+    if (status === "successed" && curriculumReq[0].curriculumName !== "") {
       alert("커리큘럼 등록에 성공하였습니다.");
-      navigate("/bootcamp/edit");
+      navigate(`/bootcamp/edit/${bootcampId}`);
     } else if (status === "failed") alert("커리큘럼 등록에 실패하였습니다."); // 나중에 에러메세지
-  });
+  }, [status]);
 
   return (
     <div className="table items-center w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
@@ -101,6 +104,7 @@ const CurriculumCreateForm = () => {
           <table className="w-11/12 border-collapse">
             <thead className="font-bold">
               <tr>
+                <td>제목</td>
                 <td>시작일</td>
                 <td>종료일</td>
                 <td>스킬셋</td>
@@ -110,6 +114,16 @@ const CurriculumCreateForm = () => {
             <tbody className="text-center">
               {curriculumReq?.map((el, idx) => (
                 <tr key={idx} className="border-collapse">
+                  <td>
+                    <input
+                      type="text"
+                      className="w-full text-center border border-gray-500 rounded-md text-lg p-1"
+                      name="curriculumName"
+                      value={el.curriculumName}
+                      onChange={(e) => setInput(e, idx)}
+                      required
+                    />
+                  </td>
                   <td>
                     <input
                       type="date"

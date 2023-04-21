@@ -5,6 +5,8 @@ const initialState = {
   data: [],
   detailData: {},
   status: "idle",
+  delStatus: "idle",
+  detailStatus: "idle",
   error: null,
 };
 
@@ -59,31 +61,31 @@ const bootcampSlice = createSlice({
       })
       .addCase(createBootcamp.fulfilled, (state, action) => {
         state.status = "successed";
-        state.data = action.payload;
+        state.detailData = action.payload;
       })
       .addCase(createBootcamp.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
       .addCase(updateBootcamp.pending, (state, action) => {
-        state.status = "loading";
+        state.detailStatus = "loading";
       })
       .addCase(updateBootcamp.fulfilled, (state, action) => {
-        state.status = "successed";
-        state.data = action.payload;
+        state.detailStatus = "successed";
+        state.detailData = action.payload;
       })
       .addCase(updateBootcamp.rejected, (state, action) => {
-        state.status = "failed";
+        state.detailStatus = "failed";
         state.error = action.error.message;
       })
       .addCase(deleteBootcampStatus.pending, (state, action) => {
-        state.status = "loading";
+        state.delStatus = "loading";
       })
       .addCase(deleteBootcampStatus.fulfilled, (state, action) => {
-        state.status = "successed";
+        state.delStatus = "successed";
       })
       .addCase(deleteBootcampStatus.rejected, (state, action) => {
-        state.status = "failed";
+        state.delStatus = "failed";
         state.error = action.error.message;
       })
       .addCase(readBootcampList.pending, (state, action) => {

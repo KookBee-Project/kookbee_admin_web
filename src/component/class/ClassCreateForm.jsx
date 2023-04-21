@@ -60,12 +60,15 @@ const ClassCreateForm = () => {
     else {
       console.log(request);
       dispatch(createBootcamp(request));
-      if (status === "successed") {
-        alert("강의 등록에 성공하였습니다.");
-        navigate("/bootcamp");
-      } else alert("강의 등록에 실패하였습니다.");
     }
   };
+
+  useEffect(() => {
+    if (status === "successed" && request.bootcampTitle !== "") {
+      alert("강의 등록에 성공하였습니다.");
+      navigate("/bootcamp");
+    } else if (status === "failed") alert("강의 등록에 실패하였습니다.");
+  }, [status]);
 
   return (
     <div className="table w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">

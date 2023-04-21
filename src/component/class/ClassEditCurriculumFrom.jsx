@@ -1,16 +1,19 @@
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 const ClassEditCurriculumForm = ({
   mode,
   curriculumReq,
   setCurriculumReq,
+  bootcampId,
   bootcampStartDate,
   bootcampEndDate,
 }) => {
   // 서버에서 skillsetData 불러와야 됨
-  const skillsetList = ["JAVA", "ML", "PYTHON"];
+  const skillSetList = useSelector((state) => state.skillSet.data);
 
   const setInput = (e, idx) => {
+    console.log(curriculumReq);
     const { name, value } = e.target;
     // 리스트에서 중간에 있는 json값을 바꾸기 위한 새로운 함수 생성
     const newReq = curriculumReq?.map((el, index) => {
@@ -47,10 +50,14 @@ const ClassEditCurriculumForm = ({
     setCurriculumReq([
       ...curriculumReq,
       {
+        id: 0,
+        bootcampId: bootcampId,
+        curriculumName: "",
         curriculumStartDate: "",
         curriculumEndDate: "",
-        skillSetName: "",
-        teacherId: "",
+        teacherEmail: "",
+        skillSetId: 1,
+        curriculumStatus: "PROCEEDING",
       },
     ]);
   };
@@ -68,6 +75,7 @@ const ClassEditCurriculumForm = ({
         <table className="w-full border-collapse">
           <thead className="font-bold">
             <tr>
+              <td>제목</td>
               <td>시작일</td>
               <td>종료일</td>
               <td>스킬셋</td>
@@ -77,6 +85,17 @@ const ClassEditCurriculumForm = ({
           <tbody className="text-center">
             {curriculumReq?.map((el, idx) => (
               <tr key={idx} className="border-collapse">
+                <td>
+                  <input
+                    type="text"
+                    className="w-full text-center border border-black"
+                    name="curriculumName"
+                    value={el.curriculumName}
+                    onChange={(e) => setInput(e, idx)}
+                    disabled={mode}
+                    required
+                  />
+                </td>
                 <td>
                   <input
                     type="date"
@@ -108,18 +127,18 @@ const ClassEditCurriculumForm = ({
                   <select
                     className="w-full text-center border border-black"
                     onChange={(e) => setInput(e, idx)}
-                    name="skillSetName"
-                    value={el.skillSetName}
+                    name="skillSetId"
+                    value={el.skillSetId}
                     disabled={mode}
                     required
                   >
-                    {skillsetList?.map((el, idx) => (
+                    {skillSetList?.map((el, idx) => (
                       <option
                         key={idx}
-                        value={el}
+                        value={el.id}
                         onChange={(e) => setInput(e, idx)}
                       >
-                        {el}
+                        {el.skillSetName}
                       </option>
                     ))}
                   </select>
@@ -128,8 +147,8 @@ const ClassEditCurriculumForm = ({
                   <input
                     type="text"
                     className="w-full text-center border border-black"
-                    name="teacherId"
-                    value={el.teacherId}
+                    name="teacherEmail"
+                    value={el.teacherEmail}
                     onChange={(e) => setInput(e, idx)}
                     disabled={mode}
                     required
