@@ -1,14 +1,25 @@
 import { useEffect, useState } from "react";
 import ClassEditCurriculumForm from "./ClassEditCurriculumFrom";
 import { useDispatch, useSelector } from "react-redux";
-import { readBootcampDetail } from "../../store/bootcamp/bootcampSlice";
-import { readCurriculum } from "../../store/curriculum/curriculumSlice";
+import {
+  deleteBootcampStatus,
+  readBootcampDetail,
+  updateBootcamp,
+} from "../../store/bootcamp/bootcampSlice";
+import {
+  readCurriculum,
+  updateCurriculum,
+} from "../../store/curriculum/curriculumSlice";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
+import { getSkillSetList } from "../../store/skillSet/skillSetSlice";
 
 const ClassEditForm = () => {
-  const { detailData, status, error } = useSelector((state) => state.bootCamp);
+  const { detailData, detailStatus, delStatus, error } = useSelector(
+    (state) => state.bootCamp
+  );
   const curriculumData = useSelector((state) => state.curriculum.data);
+  const { status } = useSelector((state) => state.curriculum);
   const [request, setRequest] = useState({});
   const [curriculumReq, setCurriculumReq] = useState([]);
 
@@ -21,6 +32,7 @@ const ClassEditForm = () => {
   useEffect(() => {
     dispatch(readBootcampDetail(param.bootcampId));
     dispatch(readCurriculum(param.bootcampId));
+    dispatch(getSkillSetList());
   }, []);
 
   useEffect(() => {
@@ -50,23 +62,30 @@ const ClassEditForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(request);
-    console.log(curriculumReq);
+    dispatch(updateBootcamp(request));
+    dispatch(updateCurriculum(curriculumReq));
   };
 
-  useEffect(() => {}, [status]);
+  useEffect(() => {
+    if (detailStatus === "successed" && status === "successed") {
+      alert("수정이 완료되었습니다.");
+      setMode("disabled");
+    } else if (detailStatus === "failed" || status === "failed")
+      alert("수정에 실패했습니다!");
+  }, [detailStatus, status]);
 
   const delBootCamp = () => {
     // 클래스 id랑 status보내주기
-    // const delReq = {
-    //   // bootcampId:,
-    //   eStatus: DELETED,
-    // };
-    // dispatch(deleteClassStatus(delReq));
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      navigate("/bootcamp");
-    }
+    if (window.confirm("정말 삭제하시겠습니까?"))
+      dispatch(deleteBootcampStatus());
   };
+
+  useEffect(() => {
+    if (delStatus === "successed") {
+      alert("삭제가 완료되었습니다.");
+      navigate("/bootcamp");
+    } else if (delStatus === "failed") alert("삭제에 실패했습니다!");
+  }, [delStatus]);
 
   return (
     <div className="table w-1/2 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
@@ -140,6 +159,7 @@ const ClassEditForm = () => {
           mode={mode}
           curriculumReq={curriculumReq}
           setCurriculumReq={setCurriculumReq}
+          bootcampId={detailData.id}
           bootcampStartDate={request.bootcampStartDate}
           bootcampEndDate={request.bootcampEndDate}
         />
