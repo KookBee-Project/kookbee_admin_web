@@ -16,7 +16,7 @@ const NotificationCreate = () => {
   const setInput = (e) => {
     const { name, value } = e.target;
     const today = new Date();
-    
+    setRequest({ ...request, [name]: value });
   };
 
   const onSubmit = (e) => {
@@ -25,8 +25,8 @@ const NotificationCreate = () => {
     dispatch(createHomework(request));
     if (status === "successed") {
       alert("물품 등록에 성공하였습니다.");
-      navigate("/product");
-    } else alert("물품 등록에 실패하였습니다.");
+      navigate("/notification");
+    } else alert("공지사항 등록에 실패하였습니다.");
   };
   return (
     <div className="table w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">

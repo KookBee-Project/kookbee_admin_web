@@ -16,18 +16,18 @@ const NotificationList = () => {
       notificationLikeCounts: 100,
       notificationRepleCounts: 200,
       imageUrl:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+        "https://i.namu.wiki/i/XxNqzt2WgFY4J0daOQZrfNG71VDMzmFQFxlUik83YSCITKdVplxhmFu4s1mhGckIseO9vXDyzZQnbhoIc46MC_nOsl2T4tqUiRA44PxkXMrkFIZh1TakidAMr2NzNJ4jRtT7D4xWTVP4PBAYPWO07g.webp",
     },
     {
       notificationId: 2,
       notificationTitle: "5월1일 공방관련 공지사항",
       notificationContent: "공방참여시 응원봉 필수입니다",
-      notificationWriter: "쿠라 센세",
+      notificationWriter: "쿠라 선생님",
       notificationDate: "2023-04-16",
       notificationLikeCounts: 100,
       notificationRepleCounts: 200,
       imageUrl:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+        "https://i.namu.wiki/i/4fS19PlGvlD82p7k3igWJWeE2y1Q-rmYYOovD3lLnz6TNEBM_05gJMG_JUf3_7zXk7PwEVzHCRL_SFtyQaBGMecyOy18yKEP26TsAJOwlkvB5FWQzvrpkRaLcJsKAoef2qSyHRmS8OOZs1Qchxk8Lw.webp",
     },
     {
       notificationId: 3,
@@ -39,7 +39,7 @@ const NotificationList = () => {
       notificationLikeCounts: 100,
       notificationRepleCounts: 200,
       imageUrl:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+        "https://i.namu.wiki/i/ielExjNIZ9IM6CAmtAJ5Dg8EidWKN1hwnNF0XHjc0Gdu-LRlomiR9relByw5rbj0gTpR2jPIkONG4MW4ZOtON8KLV4amCqbkeElrLU1SQJmRUfmeyLi09nT4H-o6w_gk-cQphK2zfg2m7MSEGv1Oew.webp",
     },
     {
       notificationId: 4,
@@ -50,7 +50,7 @@ const NotificationList = () => {
       notificationLikeCounts: 100,
       notificationRepleCounts: 200,
       imageUrl:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+        "https://i.namu.wiki/i/Gd_CqZrpR2ORJU0lHm8MtswMjhSwyr33a6Nj91iZfIWTDj-8tMFRROwZsfpNvIeChp4zeYyxf3ohSDSQrdEAuvtKaaTHQu4oz6MBaJFlZ6XfUDg-k51GB_NMxnqK0tGP84ZCdTDXMKzfRF7FpaLOuQ.webp",
     },
     {
       notificationId: 5,
@@ -60,8 +60,10 @@ const NotificationList = () => {
       notificationDate: "2023-04-16",
       notificationLikeCounts: 100,
       notificationRepleCounts: 200,
+    //   이미지는 클라우드에 올라가있는 url로 받아오면 될듯?
+    //   google 어쩌구 주소 + uuid 형식?
       imageUrl:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+        "https://i.namu.wiki/i/i5sBDwFlA-k-V_dw5KkNucxogplFUiiDKlqqNQKwtT5BBPG3ztU90g6jsudSBUlFV6KLCJWhb2DXownryg9hjCZqf_OGSD6bwkuyOGXwFTanWJZXHMvZ5IK-OOGvVSb5Rf8lzoZ2PXWeNQ1Rfx3oQQ.webp",
     },
   ];
   return (
@@ -98,7 +100,7 @@ const NotificationList = () => {
                 </p>
               </div>
               <img
-                className="h-24 w-24 flex-none bg-gray-50"
+                className="h-24 w-20 flex-none bg-gray-50"
                 src={data.imageUrl}
                 alt=""
               />
