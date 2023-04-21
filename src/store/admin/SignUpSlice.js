@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api_user } from "../../api/api";
+import { api } from "../../api/api";
 
 const initialState = {
   data: [],
@@ -13,7 +13,7 @@ export const managerSignUp = createAsyncThunk(
   "admin/manager/signup",
   async (manager) => {
     console.log(manager);
-    const response = await api_user("POST", "/admin/manager/signup", manager);
+    const response = await api("POST", "/user/admin/manager/signup", manager);
     return response.data;
   }
 );
@@ -21,7 +21,7 @@ export const managerSignUp = createAsyncThunk(
 export const teacherSignUp = createAsyncThunk(
   "admin/teacher/signup",
   async (manager) => {
-    const response = await api_user("POST", "/admin/teacher/signup", manager);
+    const response = await api("POST", "/user/admin/teacher/signup", manager);
     return response.data;
   }
 );
@@ -29,7 +29,7 @@ export const teacherSignUp = createAsyncThunk(
 export const getCompany = createAsyncThunk(
   "campus/companycode",
   async (code) => {
-    const response = await api_user("POST", "/company/companycode", code);
+    const response = await api("POST", "/user/company/companycode", code);
     console.log(response.data);
     return response.data;
   }
@@ -38,7 +38,7 @@ export const getCompany = createAsyncThunk(
 export const checkCode = createAsyncThunk(
   "company/companycode",
   async (companyId) => {
-    const response = await api_user("POST", "/campus/companyname", {
+    const response = await api("POST", "/user/campus/companyname", {
       companyId,
     });
     console.log(response.data);

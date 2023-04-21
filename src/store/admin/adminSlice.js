@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api_user } from "../../api/api";
+import { api } from "../../api/api";
 
 const initialState = {
   data: {},
@@ -9,7 +9,7 @@ const initialState = {
 
 export const login = createAsyncThunk("/user/login", async (user, thunkAPI) => {
   try {
-    const response = await api_user("POST", "/user/login", user);
+    const response = await api("POST", "/user/login", user);
     return response.data;
   } catch (err) {
     return thunkAPI.rejectWithValue(err.response);

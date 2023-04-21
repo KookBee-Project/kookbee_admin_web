@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api_bootcamp } from "../../api/api";
+import { api } from "../../api/api";
 
 const initialState = {
   data: [],
@@ -11,14 +11,14 @@ const initialState = {
 export const createCurriculum = createAsyncThunk(
   "/curriculum/create",
   async (request) => {
-    const response = await api_bootcamp("POST", "/curriculum", request);
+    const response = await api("POST", "/class/curriculum", request);
     return response.data;
   }
 );
 export const updateCurriculum = createAsyncThunk(
   "/curriculum/update",
   async (request) => {
-    const response = await api_bootcamp("PUT", "/curriculum", request);
+    const response = await api("PUT", "/class/curriculum", request);
     return response.data;
   }
 );
@@ -26,7 +26,7 @@ export const updateCurriculum = createAsyncThunk(
 export const readCurriculum = createAsyncThunk(
   "/curriculum/read",
   async (bootcampId) => {
-    const response = await api_bootcamp("GET", `/curriculum/${bootcampId}`);
+    const response = await api("GET", `/class/curriculum/${bootcampId}`);
     console.log(response.data);
     return response.data;
   }

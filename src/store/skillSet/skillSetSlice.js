@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api_bootcamp } from "../../api/api";
+import { api } from "../../api/api";
 
 const initialState = {
   data: [],
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export const getSkillSetList = createAsyncThunk("/skillSet/get", async () => {
-  const response = await api_bootcamp("GET", "/skill_set");
+  const response = await api("GET", "/class/skill_set");
   return response.data;
 });
 

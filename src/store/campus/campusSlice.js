@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api_user } from "../../api/api";
+import { api } from "../../api/api";
 
 const initialState = {
   data: [],
@@ -12,7 +12,7 @@ const initialState = {
 export const getManagerCampus = createAsyncThunk(
   "/campus/manager/get",
   async () => {
-    const response = await api_user("GET", "/campus/manager");
+    const response = await api("GET", "/user/campus/manager");
     console.log(response.data);
     return response.data;
   }
