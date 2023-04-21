@@ -8,6 +8,7 @@ import bootcampSlice from "./bootcamp/bootcampSlice";
 import skillSetSlice from "./skillSet/skillSetSlice";
 import dayOffSlice from "./dayoff/dayOffSlice";
 import homeworkSlice from "./homework/homeworkSlice";
+import productSlice from "./product/productSlice";
 
 export default configureStore({
   reducer: {
@@ -19,5 +20,6 @@ export default configureStore({
     skillSet: skillSetSlice,
     homework: homeworkSlice,
     dayOff: dayOffSlice,
+    product: productSlice,
   },
 });
