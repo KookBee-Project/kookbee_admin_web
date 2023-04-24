@@ -4,6 +4,7 @@ import { api } from "../../api/api";
 const initialState = {
   data: [],
   status: "idle",
+  curriculumDelStatus: "idle",
   readStatus: "idle",
   error: null,
 };
@@ -32,6 +33,15 @@ export const readCurriculum = createAsyncThunk(
   }
 );
 
+export const deleteCurriculum = createAsyncThunk(
+  "/curriculum/delete",
+  async (curriculumIds) => {
+    const response = await api("DELETE", `/class/curriculum`, curriculumIds);
+    console.log(response.data);
+    return response.data;
+  }
+);
+
 const curriculumSlice = createSlice({
   name: "curriculum",
   initialState,
@@ -43,7 +53,6 @@ const curriculumSlice = createSlice({
       })
       .addCase(createCurriculum.fulfilled, (state, action) => {
         state.status = "successed";
-        state.data = action.payload;
       })
       .addCase(createCurriculum.rejected, (state, action) => {
         state.status = "failed";
@@ -54,7 +63,6 @@ const curriculumSlice = createSlice({
       })
       .addCase(updateCurriculum.fulfilled, (state, action) => {
         state.status = "successed";
-        state.data = action.payload;
       })
       .addCase(updateCurriculum.rejected, (state, action) => {
         state.status = "failed";
@@ -69,6 +77,16 @@ const curriculumSlice = createSlice({
       })
       .addCase(readCurriculum.rejected, (state, action) => {
         state.readStatus = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(deleteCurriculum.pending, (state, action) => {
+        state.curriculumDelStatus = "loading";
+      })
+      .addCase(deleteCurriculum.fulfilled, (state, action) => {
+        state.curriculumDelStatus = "successed";
+      })
+      .addCase(deleteCurriculum.rejected, (state, action) => {
+        state.curriculumDelStatus = "failed";
         state.error = action.error.message;
       });
   },
