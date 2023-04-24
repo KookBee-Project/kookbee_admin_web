@@ -5,6 +5,8 @@ const ClassEditCurriculumForm = ({
   mode,
   curriculumReq,
   setCurriculumReq,
+  delCurriculumReq,
+  setDelCurriculumReq,
   bootcampId,
   bootcampStartDate,
   bootcampEndDate,
@@ -13,7 +15,6 @@ const ClassEditCurriculumForm = ({
   const skillSetList = useSelector((state) => state.skillSet.data);
 
   const setInput = (e, idx) => {
-    console.log(curriculumReq);
     const { name, value } = e.target;
     // 리스트에서 중간에 있는 json값을 바꾸기 위한 새로운 함수 생성
     const newReq = curriculumReq?.map((el, index) => {
@@ -63,9 +64,11 @@ const ClassEditCurriculumForm = ({
   };
 
   // 삭제버튼 클릭 시 커리큘럼 목록 삭제
-  const delCurriculumReq = (idx) => {
-    const newReq = curriculumReq?.filter((el, index) => idx != index);
+  const delCurriculum = (id) => {
+    const delReq = curriculumReq?.find((el) => el.id != 0 && el.id == id).id;
+    const newReq = curriculumReq?.filter((el) => el.id != id);
     setCurriculumReq(newReq);
+    setDelCurriculumReq([...delCurriculumReq, delReq]);
   };
 
   return (
@@ -156,7 +159,7 @@ const ClassEditCurriculumForm = ({
                 </td>
                 <td
                   className="hover:cursor-pointer"
-                  onClick={() => delCurriculumReq(idx)}
+                  onClick={() => delCurriculum(el.id)}
                   hidden={mode === "disabled" ? true : false}
                 >
                   <RiDeleteBinLine />

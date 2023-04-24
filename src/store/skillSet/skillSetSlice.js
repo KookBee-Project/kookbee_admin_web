@@ -23,7 +23,6 @@ const skillSetSlice = createSlice({
       })
       .addCase(getSkillSetList.fulfilled, (state, action) => {
         state.status = "successed";
-        console.log(action.payload);
         state.data = action.payload;
       })
       .addCase(getSkillSetList.rejected, (state, action) => {

@@ -19,15 +19,27 @@ export const createBootcamp = createAsyncThunk(
 );
 export const updateBootcamp = createAsyncThunk(
   "/bootcamp/update",
-  async (request) => {
+  async ({ request, curriculumReq, delCurriculumReq }) => {
     const response = await api("PUT", "/class/bootcamp", request);
+    const response2 = await api("PUT", "/class/curriculum", curriculumReq);
+    const response3 = await api(
+      "DELETE",
+      `/class/curriculum`,
+      delCurriculumReq
+    );
     return response.data;
   }
 );
 export const deleteBootcampStatus = createAsyncThunk(
   "/bootcamp/status/update",
-  async (request) => {
-    const response = await api("DELETE", `/class/bootcamp/status/`, request);
+  async ({ bootcampId, curriculumIds }) => {
+    const response2 = await api("DELETE", `/class/curriculum`, curriculumIds);
+    // return response.data;
+    const response = await api(
+      "DELETE",
+      `/class/bootcamp/${bootcampId}`,
+      bootcampId
+    );
     return response.data;
   }
 );
@@ -45,7 +57,6 @@ export const readBootcampDetail = createAsyncThunk(
   "/bootcamp/read/detail",
   async (bootcampId) => {
     const response = await api("GET", `/class/bootcamp/${bootcampId}`);
-    console.log(response.data);
     return response.data;
   }
 );

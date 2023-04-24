@@ -7,6 +7,7 @@ import {
   updateBootcamp,
 } from "../../store/bootcamp/bootcampSlice";
 import {
+  deleteCurriculum,
   readCurriculum,
   updateCurriculum,
 } from "../../store/curriculum/curriculumSlice";
@@ -19,9 +20,12 @@ const ClassEditForm = () => {
     (state) => state.bootCamp
   );
   const curriculumData = useSelector((state) => state.curriculum.data);
-  const { status } = useSelector((state) => state.curriculum);
+  const { status, curriculumDelStatus } = useSelector(
+    (state) => state.curriculum
+  );
   const [request, setRequest] = useState({});
   const [curriculumReq, setCurriculumReq] = useState([]);
+  const [delCurriculumReq, setDelCurriculumReq] = useState([]);
 
   const [mode, setMode] = useState("disabled");
 
@@ -62,22 +66,30 @@ const ClassEditForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateBootcamp(request));
-    dispatch(updateCurriculum(curriculumReq));
+    console.log(delCurriculumReq);
+    dispatch(updateBootcamp({ request, curriculumReq, delCurriculumReq }));
+    // dispatch(deleteCurriculum(delCurriculumReq));
+    // dispatch(updateCurriculum(curriculumReq));
   };
 
   useEffect(() => {
-    if (detailStatus === "successed" && status === "successed") {
+    if (detailStatus === "successed" && mode !== "disabled") {
+      dispatch(readCurriculum(param.bootcampId));
       alert("수정이 완료되었습니다.");
       setMode("disabled");
-    } else if (detailStatus === "failed" || status === "failed")
+    } else if (detailStatus === "failed" && mode !== "disabled")
       alert("수정에 실패했습니다!");
-  }, [detailStatus, status]);
+  }, [detailStatus]);
 
-  const delBootCamp = () => {
+  const delBootCamp = (bootcampId) => {
     // 클래스 id랑 status보내주기
-    if (window.confirm("정말 삭제하시겠습니까?"))
-      dispatch(deleteBootcampStatus());
+    const curriculumIds = curriculumReq
+      ?.filter((el) => el.id != 0)
+      .map((el) => el.id);
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      dispatch(deleteBootcampStatus({ bootcampId, curriculumIds }));
+      // dispatch(deleteCurriculum(delReq));
+    }
   };
 
   useEffect(() => {
@@ -159,6 +171,8 @@ const ClassEditForm = () => {
           mode={mode}
           curriculumReq={curriculumReq}
           setCurriculumReq={setCurriculumReq}
+          delCurriculumReq={delCurriculumReq}
+          setDelCurriculumReq={setDelCurriculumReq}
           bootcampId={detailData.id}
           bootcampStartDate={request.bootcampStartDate}
           bootcampEndDate={request.bootcampEndDate}
@@ -183,7 +197,7 @@ const ClassEditForm = () => {
           </button>
           <button
             type="button"
-            onClick={delBootCamp}
+            onClick={() => delBootCamp(request.id)}
             className="px-5 py-3 my-5 mx-5 bg-red-500 border rounded-xl text-xl font-bold shadow-md shadow-gray-400 hover:bg-red-300 focus:shadow-none"
           >
             삭제하기
