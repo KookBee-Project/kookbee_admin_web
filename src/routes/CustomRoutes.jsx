@@ -25,6 +25,8 @@ import Notification from "../component/notification/Notification";
 import NotificationList from "../component/notification/NotificationList";
 import NotificationCreate from "../component/notification/NotificationCreate";
 import NotificationDetail from "../component/notification/NotificationDetail";
+import ProductRegistration from "../component/product/ProductRegistration";
+import ProductItemList from "../component/product/ProductItemList";
 
 const CustomRoute = () => {
   return (
@@ -56,6 +58,8 @@ const CustomRoute = () => {
           </Route>
 
           <Route path="product/" element={<Product />}>
+            <Route path="itemregist" element={<ProductRegistration />} />
+            <Route path="itemlist" element={<ProductItemList />} />
             <Route path="" element={<BootcampListForProduct />} />
             <Route path=":bootcampId" element={<ProductList />} />
             <Route path="insert" element={<ProductCreate />} />

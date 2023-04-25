@@ -11,7 +11,6 @@ const BootcampListForProduct = () => {
 
   useEffect(() => {
     dispatch(getBootcampusList());
-    console.log(bootcampList);
   },[])
 
   return (
