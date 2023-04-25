@@ -1,29 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { updateDayOffStasus } from "../../store/dayoff/dayOffSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { getDayOffDetail, updateDayOffStasus } from "../../store/dayoff/dayOffSlice";
 
 const DayOffApplyDetail = () => {
-  const { status, error } = useSelector((state) => state.homework);
+  const { data, status, error } = useSelector((state) => state.dayOff);
   const [request, setRequest] = useState({
     userType: "",
     dayOffManagerStatus: "",
     dayOffTeacherStatus: "",
   });
 
-  const data = {
-    userType: "teacher",
-    campusName: "서초캠퍼스",
-    bootcampName: "빅데이터 부트캠프 17기",
-    studentName: "정유철",
-    dayOffStartDate: "2023-04-25",
-    dayOffEndDate: "2023-04-27",
-    useDays: 3,
-    dayOffReason: "정보처리기사 자격증 필기시험 수험",
-    dayOffManagerStatus: "대기중", // 대기중, 승인, 반려
-    dayOffTeacherStatus: "승인",
-    dayOffStatus: "대기중",
-  };
+  const dayOffId = useParams().dayOffId;
+  console.log(dayOffId);
+
+  useEffect(() => {
+    dispatch(getDayOffDetail(dayOffId));
+  }, []);
+
   const setInput = (e) => {
     const { name, value } = e.target;
     setRequest({ ...request, [name]: value });
@@ -107,8 +101,8 @@ const DayOffApplyDetail = () => {
             <div className="flex w-full">
               <div className="mt-2 w-1/2">
                 매니저님 승인
-                {(data.userType === "manager") &
-                (data.dayOffStatus === "대기중") ? (
+                {(data.userType === "MANAGER") &
+                (data.dayOffStatus === "PENDING") ? (
                   <div className="border-2 border-yellow-300 rounded-xl p-1 w-4/5 text-center font-semibold">
                     <select
                       id="dayOffManagerStatus"
@@ -129,8 +123,8 @@ const DayOffApplyDetail = () => {
               </div>
               <div className="mt-2 w-1/2">
                 강사님 승인
-                {(data.userType === "teacher") &
-                (data.dayOffStatus === "대기중") ? (
+                {(data.userType === "TEACHER") &
+                (data.dayOffStatus === "PENDING") ? (
                   <div className="border-2 border-yellow-300 rounded-xl p-1 w-4/5 text-center font-semibold">
                     <select
                       id="dayOffTeacherStatus"
