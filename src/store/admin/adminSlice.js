@@ -16,6 +16,18 @@ export const login = createAsyncThunk("/user/login", async (user, thunkAPI) => {
   }
 });
 
+export const getUserType = createAsyncThunk(
+  "/user/usertype",
+  async (thunkAPI) => {
+    try {
+      const response = await api("GET", "/user/usertype");
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response);
+    }
+  }
+);
+
 const adminSlice = createSlice({
   name: "admin",
   initialState,
@@ -40,6 +52,17 @@ const adminSlice = createSlice({
         localStorage.setItem("AccessToken", action.payload.accessToken);
       })
       .addCase(login.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload.data;
+      })
+      .addCase(getUserType.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getUserType.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.data = action.payload;
+      })
+      .addCase(getUserType.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload.data;
       });

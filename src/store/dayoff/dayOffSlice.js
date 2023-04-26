@@ -1,24 +1,37 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api} from "../../api/api";
+import { api } from "../../api/api";
 
 const initialState = {
   data: [],
+  listData: [],
   status: "idle",
   error: null,
 };
 
 export const updateDayOffStasus = createAsyncThunk(
-  "/dayoff/create",
-  async (request) => {
-    const response = await api("POST", "/class/dayoff", request);
+  "class/dayoffDetail/modify",
+  async ({ request, dayOffId }) => {
+    const response = await api(
+      "PUT",
+      `class/dayoff/admin/${dayOffId}`,
+      request
+    );
     return response.data;
   }
 );
 
-export const getDayOffList = createAsyncThunk(
-  "class/dayoff",
+export const getDayOffListForManager = createAsyncThunk(
+  "class/dayoff/manager",
   async () => {
-    const response = await api("GET", "class/dayoff/admin");
+    const response = await api("GET", "class/dayoff/admin/manager");
+    return response.data;
+  }
+);
+
+export const getDayOffListForTeacher = createAsyncThunk(
+  "class/dayoff/teacher",
+  async () => {
+    const response = await api("GET", "class/dayoff/admin/teacher");
     return response.data;
   }
 );
@@ -31,8 +44,6 @@ export const getDayOffDetail = createAsyncThunk(
   }
 );
 
-
-
 const dayOffSlice = createSlice({
   name: "dayOff",
   initialState,
@@ -44,20 +55,30 @@ const dayOffSlice = createSlice({
       })
       .addCase(updateDayOffStasus.fulfilled, (state, action) => {
         state.status = "successed";
-        state.data = action.payload;
       })
       .addCase(updateDayOffStasus.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(getDayOffList.pending, (state, action) => {
+      .addCase(getDayOffListForManager.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(getDayOffList.fulfilled, (state, action) => {
+      .addCase(getDayOffListForManager.fulfilled, (state, action) => {
         state.status = "successed";
-        state.data = action.payload;
+        state.listData = action.payload;
       })
-      .addCase(getDayOffList.rejected, (state, action) => {
+      .addCase(getDayOffListForManager.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(getDayOffListForTeacher.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getDayOffListForTeacher.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.listData = action.payload;
+      })
+      .addCase(getDayOffListForTeacher.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
@@ -72,18 +93,6 @@ const dayOffSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       });
-    //   .addCase(updateCurriculum.pending, (state, action) => {
-    //     state.status = "loading";
-    //   })
-    //   .addCase(updateCurriculum.fulfilled, (state, action) => {
-    //     state.status = "successed";
-    //     state.data = action.payload;
-    //   })
-    //   .addCase(updateCurriculum.rejected, (state, action) => {
-    //     state.status = "failed";
-    //     state.error = action.error.message;
-    //   })
-      
   },
 });
 export default dayOffSlice.reducer;

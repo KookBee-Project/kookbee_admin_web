@@ -1,14 +1,26 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getDayOffList } from "../../store/dayoff/dayOffSlice";
+import { getUserType } from "../../store/admin/adminSlice";
+import { getDayOffList, getDayOffListForManager, getDayOffListForTeacher } from "../../store/dayoff/dayOffSlice";
 
 const DayOffApplyList = () => {
-  const { data, status, error } = useSelector((state) => state.dayOff);
+  const { listData, status, error } = useSelector((state) => state.dayOff);
+  const userType = useSelector((state) => state.admin.data);
+  console.log(userType);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getDayOffList());
+    dispatch(getUserType());
   }, []);
+
+  useEffect(() => {
+    if (userType == "MANAGER") {
+      dispatch(getDayOffListForManager());
+    } else if (userType == "TEACHER") {
+      dispatch(getDayOffListForTeacher());
+    }
+  }, [userType]);
 
   return (
     <div className="table items-center w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
@@ -27,7 +39,7 @@ const DayOffApplyList = () => {
             </tr>
           </thead>
           <tbody className="text-center border border-black">
-            {data?.map((el, idx) => (
+            {listData?.map((el, idx) => (
               <tr key={idx}>
                 <td className="p-1">{idx + 1}</td>
                 <td className="p-1">{el.campusName}</td>
@@ -35,7 +47,8 @@ const DayOffApplyList = () => {
                 <td className="p-1">{el.studentName}</td>
                 <td className="p-1">{el.dayOffStartDate}</td>
                 <td className="p-1">{el.dayOffEndDate}</td>
-                {el.dayOffStatus == "PENDING" && (
+                {(el.dayOffManagerStatus == "PENDING" ||
+                  el.dayOffTeacherStatus == "PENDING") && (
                   <td className="p-1">
                     <Link to={`/dayoff/${el.dayOffId}`}>
                       <button className="p-1 pl-10 pr-10 bg-yellow-300 rounded-lg w-13 font-semibold">
@@ -44,7 +57,8 @@ const DayOffApplyList = () => {
                     </Link>
                   </td>
                 )}
-                {el.dayOffStatus == "APPROVAL" && (
+                {(el.dayOffManagerStatus == "APPROVAL" ||
+                  el.dayOffTeacherStatus == "APPROVAL") && (
                   <td className="p-1">
                     <Link to={`/dayoff/${el.dayOffId}`}>
                       <button className="p-1 pl-10 pr-10 bg-yellow-300 rounded-lg w-13 font-semibold">
@@ -53,15 +67,16 @@ const DayOffApplyList = () => {
                     </Link>
                   </td>
                 )}
-                {el.dayOffStatus == "REJECT" && (
-                  <td className="p-1">
-                    <Link to={`/dayoff/${el.dayOffId}`}>
-                      <button className="p-1 pl-10 pr-10 bg-yellow-300 rounded-lg w-13 font-semibold">
-                        반려
-                      </button>
-                    </Link>
-                  </td>
-                )}
+                {el.dayOffManagerStatus == "REJECT" ||
+                  (el.dayOffTeacherStatus == "REJECT" && (
+                    <td className="p-1">
+                      <Link to={`/dayoff/${el.dayOffId}`}>
+                        <button className="p-1 pl-10 pr-10 bg-yellow-300 rounded-lg w-13 font-semibold">
+                          반려
+                        </button>
+                      </Link>
+                    </td>
+                  ))}
               </tr>
             ))}
           </tbody>
