@@ -65,10 +65,12 @@ const CustomRoute = () => {
           <Route path="product/" element={<Product />}>
             <Route path="itemregist" element={<ProductRegistration />} />
             <Route path="itemlist" element={<ProductItemList />} />
+
             <Route path="" element={<BootcampListForProduct />} />
             <Route path=":bootcampId" element={<ProductList />} />
-            <Route path="insert" element={<ProductCreate />} />
             <Route path=":bootcampId/:productId" element={<ProductDetail />} />
+
+            <Route path="insert/:bootcampId" element={<ProductCreate />} />
           </Route>
 
           <Route path="notification/" element={<Notification />}>

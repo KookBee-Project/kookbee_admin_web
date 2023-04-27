@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getBootcampusList } from "../../store/product/productSlice";
+import { getBootcampList } from "../../store/product/productSlice";
 
 const BootcampListForProduct = () => {
 
@@ -10,7 +10,8 @@ const BootcampListForProduct = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getBootcampusList());
+    dispatch(getBootcampList());
+    console.log(bootcampList.bootcampTitle);
   },[])
 
   return (
