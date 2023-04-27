@@ -33,6 +33,7 @@ const ProductRegistrationForm = () => {
     navigate("/product/itemlist");
   };
 
+
   return (
     <div className="table w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
       <div className="text-center font-bold text-3xl mt-10">상품 등록</div>

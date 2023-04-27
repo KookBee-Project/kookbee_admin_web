@@ -6,14 +6,18 @@ const initialState = {
   bootcampList: [],
   campusList: [],
   itemList: [],
+  studentList: [],
+  productItemList: [],
+  productItemCount: {},
   status: "idle",
   error: null,
 };
 
-export const getBootcampusList = createAsyncThunk(
+export const getBootcampList = createAsyncThunk(
   "/product/bootcamplist",
   async () => {
     const response = await api("GET", "/class/product/bootcamplist");
+    console.log(response.data);
     return response.data;
   }
 );
@@ -40,20 +44,41 @@ export const getProductItems = createAsyncThunk(
   }
 )
 
+export const getStudentList = createAsyncThunk(
+  "/class/product/studentlist", async(bootcampId) => {
+    const response = await api("GET", `/class/product/studentlist/${bootcampId}`);
+    return response.data;
+  }
+)
+
+export const getProductItemList = createAsyncThunk(
+  "/calss/product/productitemlist/${bootcampId}", async(bootcampId) => {
+    const response = await api("GET", `/class/product/productitemlist/${bootcampId}`);
+    return response.data;
+  }
+)
+
+export const getProductItemCount = createAsyncThunk(
+  "/class/product/productitemcount/{productItemId}", async() => {
+    const response = await api("GET", `/class/product/productitemcount/${productItemId}`);
+    return response.data;
+  }
+)
+
 const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getBootcampusList.pending, (state, action) => {
+      .addCase(getBootcampList.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(getBootcampusList.fulfilled, (state, action) => {
+      .addCase(getBootcampList.fulfilled, (state, action) => {
         state.status = "successed";
         state.bootcampList = action.payload;
       })
-      .addCase(getBootcampusList.rejected, (state, action) => {
+      .addCase(getBootcampList.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
@@ -87,6 +112,39 @@ const productSlice = createSlice({
         state.itemList = action.payload;
       })
       .addCase(getProductItems.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(getStudentList.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getStudentList.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.studentList = action.payload;
+      })
+      .addCase(getStudentList.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(getProductItemList.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getProductItemList.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.productItemList = action.payload;
+      })
+      .addCase(getProductItemList.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(getProductItemCount.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getProductItemCount.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.productItemCount = action.payload;
+      })
+      .addCase(getProductItemCount.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })

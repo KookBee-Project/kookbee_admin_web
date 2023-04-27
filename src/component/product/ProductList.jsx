@@ -1,9 +1,17 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const ProductList = () => {
-  // 부트캠프Id로 물품목록 불러오기
-  // 이건 임시데이터
-  const bootcampId = "1";
+
+  const [bootcampId, setBootcampId] = useState("");
+  
+  const param = useParams();
+
+  useEffect(()=>{
+    setBootcampId(param);
+  },[])
+
   const data1 = [
     {
       productId: 1,
@@ -62,8 +70,7 @@ const ProductList = () => {
       <div className="flex flex-col items-center w-full h-5/6 mt-10">
         <div className="text-center font-bold text-3xl">물품 목록</div>
         <br />
-        {/*빈공간 어케넣죠?*/}
-        <h>부트캠프 이름</h> {/*부트캠프 아이디로 찾아오기*/}
+        <h>부트캠프 이름</h>
         <div className="text-center font-bold text-3xl">제공내역</div>
         <b></b>
         <table className="my-10">
@@ -103,20 +110,20 @@ const ProductList = () => {
           </thead>
           <tbody className="text-center border border-black">
             {data1?.map((el) => (
-                <tr key={el.productId}>
+              <tr key={el.productId}>
                 <Link to={`/product/${bootcampId}/${el.productId}`}>
-                <td className="p-1">{el.receiver}</td>
+                  <td className="p-1">{el.receiver}</td>
                 </Link>
                 <td className="p-1">{el.productTitle}</td>
                 <td className="p-1">{el.quantity}</td>
                 <td className="p-1">{el.productStartDate}</td>
                 <td className="p-1">{el.status}</td>
-           </tr>
+              </tr>
             ))}
           </tbody>
         </table>
         <div className="flex w-10/12 justify-end">
-          <Link to={"/product/insert"}>
+          <Link to={`/product/insert/${param.bootcampId}`}>
             <button
               className="px-5 py-3 my-5 bg-yellow-300 border rounded-xl text-xl font-bold 
         shadow-md shadow-gray-400 hover:bg-yellow-200 focus:shadow-none right"
