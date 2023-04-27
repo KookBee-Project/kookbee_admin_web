@@ -18,22 +18,22 @@ const NotificationDetail = () => {
       </div>
       <div className="flex flex-col items-center my-5 w-full">
         <div className="flex flex-col w-10/12 font-bold">
-          과정명
+          제목
           <div className="border-2 border-yellow-300 rounded-xl p-1 w-1/2 text-center font-semibold">
             {data.bootcampName}
           </div>
         </div>
         <div className="flex flex-col w-10/12 font-bold mt-3 justify-between">
-          대여기간
+          대여기간
           <div className="flex w-full">
             <div className="mt-2 w-1/2">
-              시작일
+              시작일
               <div className="border-2 border-yellow-300 rounded-xl p-1 w-4/5 text-center font-semibold">
                 {data.productStartDate}
               </div>
             </div>
             <div className="mt-2 w-1/2">
-              마감일
+              마감일
               <div className="border-2 border-yellow-300 rounded-xl p-1 w-4/5 text-center font-semibold">
                 {data.productEndDate}
               </div>
@@ -41,16 +41,16 @@ const NotificationDetail = () => {
           </div>
         </div>{" "}
         <div className="flex flex-col w-10/12 font-bold mt-3 justify-between">
-          학생수
+          학생수
           <div className="flex w-full">
             <div className="mt-2 w-1/2">
-              빌린학생수
+              빌린학생수
               <div className="border-2 border-yellow-300 rounded-xl p-1 w-4/5 text-center font-semibold">
                 {data.borrowStudent}
               </div>
             </div>
             <div className="mt-2 w-1/2">
-              총 학생수
+              총 학생수
               <div className="border-2 border-yellow-300 rounded-xl p-1 w-4/5 text-center font-semibold">
                 {data.totalStudent}
               </div>
