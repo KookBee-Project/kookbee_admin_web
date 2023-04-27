@@ -4,15 +4,14 @@ import { Link } from "react-router-dom";
 import { getBootcampList } from "../../store/product/productSlice";
 
 const BootcampListForProduct = () => {
-
-  const { bootcampList } = useSelector((state) => (state.product));
+  const { bootcampList } = useSelector((state) => state.product);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getBootcampList());
     console.log(bootcampList.bootcampTitle);
-  },[])
+  }, []);
 
   return (
     <div className="table items-center w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
@@ -40,6 +39,16 @@ const BootcampListForProduct = () => {
             ))}
           </tbody>
         </table>
+        <div className="flex w-10/12 justify-center">
+          <Link to={"/product/itemlist"}>
+            <button
+              className="px-5 py-3 my-5 bg-yellow-300 border rounded-xl text-xl font-bold 
+        shadow-md shadow-gray-400 hover:bg-yellow-200 focus:shadow-none right"
+            >
+              물품관리
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
