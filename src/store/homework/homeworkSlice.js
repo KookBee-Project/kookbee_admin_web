@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api} from "../../api/api";
+import { api } from "../../api/api";
 
 const initialState = {
   data: [],
+  homeworkList: [],
   status: "idle",
   error: null,
 };
@@ -18,6 +19,29 @@ export const createHomeworkComment = createAsyncThunk(
   "/homeworkComment/create",
   async (request) => {
     const response = await api("POST", "/class/homework/comment", request);
+    return response.data;
+  }
+);
+export const readHomeworkList = createAsyncThunk(
+  "/homworkList/read",
+  async (curriculumId) => {
+    const response = await api("GET", `/class/homework/list/${curriculumId}`);
+    return response.data;
+  }
+);
+
+export const readHomeworkAnswerList = createAsyncThunk(
+  "/homworkAnswerList/read",
+  async (curriculumId) => {
+    const response = await api("GET", `/class/homework/list/${curriculumId}`);
+    return response.data;
+  }
+);
+
+export const readHomeworkDetail = createAsyncThunk(
+  "/homworkDetail/read",
+  async (homeworkId) => {
+    const response = await api("GET", `/class/homework/detail/${homeworkId}`);
     return response.data;
   }
 );
@@ -65,29 +89,29 @@ const homeworkSlice = createSlice({
       .addCase(createHomeworkComment.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(readHomeworkList.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(readHomeworkList.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.homeworkList = action.payload;
+      })
+      .addCase(readHomeworkList.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(readHomeworkDetail.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(readHomeworkDetail.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.data = action.payload;
+      })
+      .addCase(readHomeworkDetail.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
-    //   .addCase(updateCurriculum.pending, (state, action) => {
-    //     state.status = "loading";
-    //   })
-    //   .addCase(updateCurriculum.fulfilled, (state, action) => {
-    //     state.status = "successed";
-    //     state.data = action.payload;
-    //   })
-    //   .addCase(updateCurriculum.rejected, (state, action) => {
-    //     state.status = "failed";
-    //     state.error = action.error.message;
-    //   })
-    //   .addCase(readCurriculum.pending, (state, action) => {
-    //     state.status = "loading";
-    //   })
-    //   .addCase(readCurriculum.fulfilled, (state, action) => {
-    //     state.status = "successed";
-    //     state.data = action.payload;
-    //   })
-    //   .addCase(readCurriculum.rejected, (state, action) => {
-    //     state.status = "failed";
-    //     state.error = action.error.message;
-    //   });
   },
 });
 export default homeworkSlice.reducer;

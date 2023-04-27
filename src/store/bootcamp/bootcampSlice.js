@@ -52,6 +52,14 @@ export const readBootcampList = createAsyncThunk(
   }
 );
 
+export const readBootcampListByTeacher = createAsyncThunk(
+  "/bootcamp/teacher/read/list",
+  async () => {
+    const response = await api("GET", "/class/bootcamp/teacher");
+    return response.data;
+  }
+);
+
 // 바뀔수도 있음
 export const readBootcampDetail = createAsyncThunk(
   "/bootcamp/read/detail",
@@ -62,7 +70,7 @@ export const readBootcampDetail = createAsyncThunk(
 );
 
 const bootcampSlice = createSlice({
-  name: "admin",
+  name: "bootcamp",
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -107,6 +115,17 @@ const bootcampSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(readBootcampList.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(readBootcampListByTeacher.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(readBootcampListByTeacher.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.data = action.payload;
+      })
+      .addCase(readBootcampListByTeacher.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })

@@ -48,6 +48,7 @@ const Login = () => {
                   name="userEmail"
                   value={request.userEmail}
                   onChange={onChange}
+                  required
                 />
               </div>
               <div className="text-left">
@@ -61,6 +62,7 @@ const Login = () => {
                   name="userPw"
                   value={request.userPw}
                   onChange={onChange}
+                  required
                 />
               </div>
             </div>

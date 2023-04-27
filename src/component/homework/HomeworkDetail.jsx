@@ -1,17 +1,18 @@
+import { useParams } from "react-router-dom";
 import Homework from "./Homework";
 import HomeworkAnswerList from "./HomeworkAnswerList";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { readHomeworkDetail } from "../../store/homework/homeworkSlice";
 
 const HomeworkDetail = () => {
-  const data = {
-    homeworkTitle: "별그리기",
-    homeworkContent: "*문자를 활용해서 별을 그려보세요",
-    homeworkStartDate: "2023-04-16",
-    homeworkEndDate: "2023-04-20",
-    curriculumName: "JAVA를 활용한 xq알고리즘",
-    homeworkSkillSet: "JAVA",
-    summitStudent: 7,
-    totalStudent: 10,
-  };
+  const { data, status, error } = useSelector((state) => state.homework);
+  const { homeworkId } = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(readHomeworkDetail(homeworkId));
+  }, []);
 
   return (
     <div className="table w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
@@ -28,7 +29,7 @@ const HomeworkDetail = () => {
         <div className="flex flex-col w-10/12 font-bold mt-3">
           관련스킬셋
           <div className="border-2 border-yellow-300 rounded-xl p-1 w-1/4 text-center font-semibold">
-            {data.homeworkSkillSet}
+            {data.skillSet.skillSetName}
           </div>
         </div>
         <div className="flex flex-col w-10/12 font-bold mt-3 justify-between">
@@ -50,7 +51,7 @@ const HomeworkDetail = () => {
         </div>
         <div className="flex flex-col w-10/12 font-bold mt-3">
           내용
-          <div className="border-2 border-yellow-300 rounded-xl p-1 w-full h-40 font-semibold">
+          <div className="border-2 whitespace-pre-wrap break-all overflow-auto border-yellow-300 rounded-xl p-1 w-full h-40 font-semibold">
             {data.homeworkContent}
           </div>
         </div>
