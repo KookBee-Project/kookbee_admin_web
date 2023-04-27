@@ -8,6 +8,7 @@ import ClassEdit from "../component/class/ClassEdit";
 import CurriculumCreate from "../component/curriculum/CurriculumCreate";
 import Homework from "../component/homework/Homework";
 import BootcampList from "../component/homework/BootcampList";
+import CurriculumList from "../component/homework/CurriculumList";
 import HomeworkList from "../component/homework/HomeworkList";
 import HomeworkDetail from "../component/homework/HomeworkDetail";
 import HomeworkCreate from "../component/homework/HomeworkCreate";
@@ -43,9 +44,13 @@ const CustomRoute = () => {
 
           <Route path="homework/" element={<Homework />}>
             <Route path="" element={<BootcampList />} />
-            <Route path=":bootcampId" element={<HomeworkList />} />
+            <Route path=":bootcampId" element={<CurriculumList />} />
             <Route
-              path=":bootcampId/:homeworkId"
+              path=":bootcampId/:curriculumId"
+              element={<HomeworkList />}
+            />
+            <Route
+              path=":bootcampId/:curriculumId/:homeworkId"
               element={<HomeworkDetail />}
             />
             <Route

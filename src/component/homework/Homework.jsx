@@ -1,7 +1,5 @@
 import { Outlet } from "react-router-dom";
 import TeacherSideBar from "../../sidebar/TeacherSideBar";
-import ClassHistoryList from "../class/ClassHistoryList";
-import BootcampHistoryList from "./BootcampList";
 
 const Homework = () => {
   return (

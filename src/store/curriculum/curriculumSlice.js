@@ -3,6 +3,7 @@ import { api } from "../../api/api";
 
 const initialState = {
   data: [],
+  curriculumList: [],
   status: "idle",
   curriculumDelStatus: "idle",
   readStatus: "idle",
@@ -28,6 +29,18 @@ export const readCurriculum = createAsyncThunk(
   "/curriculum/read",
   async (bootcampId) => {
     const response = await api("GET", `/class/curriculum/${bootcampId}`);
+    console.log(response.data);
+    return response.data;
+  }
+);
+
+export const readTeacherCurriculumList = createAsyncThunk(
+  "/curriculum/teacher/read",
+  async (bootcampId) => {
+    const response = await api(
+      "GET",
+      `/class/curriculum/teacher/${bootcampId}`
+    );
     console.log(response.data);
     return response.data;
   }
@@ -87,6 +100,17 @@ const curriculumSlice = createSlice({
       })
       .addCase(deleteCurriculum.rejected, (state, action) => {
         state.curriculumDelStatus = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(readTeacherCurriculumList.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(readTeacherCurriculumList.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.curriculumList = action.payload;
+      })
+      .addCase(readTeacherCurriculumList.rejected, (state, action) => {
+        state.status = "failed";
         state.error = action.error.message;
       });
   },
