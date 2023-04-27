@@ -1,4 +1,3 @@
-import Homework from "./Homework";
 import HomeworkAnswerList from "./HomeworkAnswerList";
 
 const HomeworkDetail = () => {
@@ -41,7 +40,7 @@ const HomeworkDetail = () => {
               </div>
             </div>
             <div className="mt-2 w-1/2">
-              마감일
+              마감일
               <div className="border-2 border-yellow-300 rounded-xl p-1 w-4/5 text-center font-semibold">
                 {data.homeworkEndDate}
               </div>
