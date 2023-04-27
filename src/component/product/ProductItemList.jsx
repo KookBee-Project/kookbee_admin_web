@@ -7,6 +7,7 @@ const ProductItemList = () => {
       <div className="flex w-5/6 h-5/6 justify-center">
         <ProductItemListForm />
         <Outlet />
+        
       </div>
     </div>
   );
