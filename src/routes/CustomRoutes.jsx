@@ -78,7 +78,7 @@ const CustomRoute = () => {
 
           <Route path="dayoff/" element={<DayOff />}>
             <Route path="" element={<DayOffApplyList />} />
-            <Route path=":studentName" element={<DayOffApplyDetail />} />
+            <Route path=":dayOffId" element={<DayOffApplyDetail />} />
           </Route>
         </Route>
       </Routes>

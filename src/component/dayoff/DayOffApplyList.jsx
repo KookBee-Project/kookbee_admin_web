@@ -1,32 +1,26 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getUserType } from "../../store/admin/adminSlice";
+import { getDayOffList, getDayOffListForManager, getDayOffListForTeacher } from "../../store/dayoff/dayOffSlice";
 
 const DayOffApplyList = () => {
-  const data = [
-    {
-      campusName: "서초캠퍼스",
-      bootcampName: "빅데이터 부트캠프 17기",
-      studentName: "정유철",
-      dayOffStartDate: "2023-04-25",
-      dayOffEndDate: "2023-04-27",
-      dayOffStatus: "대기중", // 대기중, 승인, 반려
-    },
-    {
-      campusName: "서초캠퍼스",
-      bootcampName: "빅데이터 부트캠프 17기",
-      studentName: "김한휘",
-      dayOffStartDate: "2023-04-25",
-      dayOffEndDate: "2023-04-27",
-      dayOffStatus: "승인", // 대기중, 승인, 반려
-    },
-    {
-      campusName: "서초캠퍼스",
-      bootcampName: "빅데이터 부트캠프 17기",
-      studentName: "정유철",
-      dayOffStartDate: "2023-05-14",
-      dayOffEndDate: "2023-05-17",
-      dayOffStatus: "반려", // 대기중, 승인, 반려
-    },
-  ];
+  const { listData, status, error } = useSelector((state) => state.dayOff);
+  const userType = useSelector((state) => state.admin.data);
+  console.log(userType);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserType());
+  }, []);
+
+  useEffect(() => {
+    if (userType == "MANAGER") {
+      dispatch(getDayOffListForManager());
+    } else if (userType == "TEACHER") {
+      dispatch(getDayOffListForTeacher());
+    }
+  }, [userType]);
 
   return (
     <div className="table items-center w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
@@ -45,17 +39,44 @@ const DayOffApplyList = () => {
             </tr>
           </thead>
           <tbody className="text-center border border-black">
-            {data?.map((el, idx) => (
+            {listData?.map((el, idx) => (
               <tr key={idx}>
-                <td className="p-1">{idx+1}</td>
-                <Link to={`/dayoff/${el.studentName}`}>
-                  <td className="p-1">{el.campusName}</td>
-                </Link>
+                <td className="p-1">{idx + 1}</td>
+                <td className="p-1">{el.campusName}</td>
                 <td className="p-1">{el.bootcampName}</td>
                 <td className="p-1">{el.studentName}</td>
                 <td className="p-1">{el.dayOffStartDate}</td>
                 <td className="p-1">{el.dayOffEndDate}</td>
-                <td className="p-1">{el.dayOffStatus}</td>
+                {(el.dayOffManagerStatus == "PENDING" ||
+                  el.dayOffTeacherStatus == "PENDING") && (
+                  <td className="p-1">
+                    <Link to={`/dayoff/${el.dayOffId}`}>
+                      <button className="p-1 pl-10 pr-10 bg-yellow-300 rounded-lg w-13 font-semibold">
+                        대기중
+                      </button>
+                    </Link>
+                  </td>
+                )}
+                {(el.dayOffManagerStatus == "APPROVAL" ||
+                  el.dayOffTeacherStatus == "APPROVAL") && (
+                  <td className="p-1">
+                    <Link to={`/dayoff/${el.dayOffId}`}>
+                      <button className="p-1 pl-10 pr-10 bg-yellow-300 rounded-lg w-13 font-semibold">
+                        승인완료
+                      </button>
+                    </Link>
+                  </td>
+                )}
+                {el.dayOffManagerStatus == "REJECT" ||
+                  (el.dayOffTeacherStatus == "REJECT" && (
+                    <td className="p-1">
+                      <Link to={`/dayoff/${el.dayOffId}`}>
+                        <button className="p-1 pl-10 pr-10 bg-yellow-300 rounded-lg w-13 font-semibold">
+                          반려
+                        </button>
+                      </Link>
+                    </td>
+                  ))}
               </tr>
             ))}
           </tbody>

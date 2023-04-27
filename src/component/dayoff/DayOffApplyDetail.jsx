@@ -1,29 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { updateDayOffStasus } from "../../store/dayoff/dayOffSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  getDayOffDetail,
+  updateDayOffStasus,
+} from "../../store/dayoff/dayOffSlice";
 
 const DayOffApplyDetail = () => {
-  const { status, error } = useSelector((state) => state.homework);
+  const { data, status, error } = useSelector((state) => state.dayOff);
   const [request, setRequest] = useState({
-    userType: "",
     dayOffManagerStatus: "",
     dayOffTeacherStatus: "",
   });
+  console.log(request);
+  const dayOffId = useParams().dayOffId;
+  console.log(dayOffId);
 
-  const data = {
-    userType: "teacher",
-    campusName: "서초캠퍼스",
-    bootcampName: "빅데이터 부트캠프 17기",
-    studentName: "정유철",
-    dayOffStartDate: "2023-04-25",
-    dayOffEndDate: "2023-04-27",
-    useDays: 3,
-    dayOffReason: "정보처리기사 자격증 필기시험 수험",
-    dayOffManagerStatus: "대기중", // 대기중, 승인, 반려
-    dayOffTeacherStatus: "승인",
-    dayOffStatus: "대기중",
-  };
+  useEffect(() => {
+    dispatch(getDayOffDetail(dayOffId));
+  }, []);
+
+  useEffect(() => {
+    setRequest({
+      dayOffManagerStatus: data.dayOffManagerStatus,
+      dayOffTeacherStatus: data.dayOffTeacherStatus,
+    });
+  }, [data]);
+
   const setInput = (e) => {
     const { name, value } = e.target;
     setRequest({ ...request, [name]: value });
@@ -34,17 +37,32 @@ const DayOffApplyDetail = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(request);
-    if (
-      request.homeworkRating === "" ||
-      request.homeworkRating === "-휴가 상태-"
-    ) {
-      alert("휴가 상태를 결정해주세요!");
-    } else {
-      dispatch(updateDayOffStasus(request));
-      if (status === "successed") {
-        alert("휴가 상태를 반영했습니다.");
-        navigate("/dayoff");
-      } else alert("실패하였습니다. 다시 확인부탁드립니다.");
+    if (data.userType === "MANAGER") {
+      if (
+        request.dayOffManagerStatus === "PENDING" ||
+        request.dayOffManagerStatus === undefined
+      ) {
+        alert("휴가 상태를 결정해주세요!");
+      } else {
+        dispatch(updateDayOffStasus({ request, dayOffId }));
+        if (status === "successed") {
+          alert("휴가 상태를 반영했습니다.");
+          navigate("/dayoff");
+        } else alert("실패하였습니다. 다시 확인부탁드립니다.");
+      }
+    } else if (data.userType === "TEACHER") {
+      if (
+        request.dayOffTeacherStatus === "PENDING" ||
+        request.dayOffTeacherStatus === undefined
+      ) {
+        alert("휴가 상태를 결정해주세요!");
+      } else {
+        dispatch(updateDayOffStasus({ request, dayOffId }));
+        if (status === "successed") {
+          alert("휴가 상태를 반영했습니다.");
+          navigate("/dayoff");
+        } else alert("실패하였습니다. 다시 확인부탁드립니다.");
+      }
     }
   };
 
@@ -107,8 +125,8 @@ const DayOffApplyDetail = () => {
             <div className="flex w-full">
               <div className="mt-2 w-1/2">
                 매니저님 승인
-                {(data.userType === "manager") &
-                (data.dayOffStatus === "대기중") ? (
+                {(data.userType === "MANAGER") &
+                (data.dayOffManagerStatus === "PENDING") ? (
                   <div className="border-2 border-yellow-300 rounded-xl p-1 w-4/5 text-center font-semibold">
                     <select
                       id="dayOffManagerStatus"
@@ -116,9 +134,9 @@ const DayOffApplyDetail = () => {
                       className="text-base w-full"
                       onChange={setInput}
                     >
-                      <option>-휴가 상태-</option>
-                      <option>승인</option>
-                      <option>반려</option>
+                      <option value={undefined}>-휴가 상태-</option>
+                      <option value={"APPROVAL"}>승인</option>
+                      <option value={"REJECT"}>반려</option>
                     </select>
                   </div>
                 ) : (
@@ -129,8 +147,8 @@ const DayOffApplyDetail = () => {
               </div>
               <div className="mt-2 w-1/2">
                 강사님 승인
-                {(data.userType === "teacher") &
-                (data.dayOffStatus === "대기중") ? (
+                {(data.userType === "TEACHER") &
+                (data.dayOffTeacherStatus === "PENDING") ? (
                   <div className="border-2 border-yellow-300 rounded-xl p-1 w-4/5 text-center font-semibold">
                     <select
                       id="dayOffTeacherStatus"
@@ -138,9 +156,9 @@ const DayOffApplyDetail = () => {
                       className="text-base w-full"
                       onChange={setInput}
                     >
-                      <option>-휴가 상태-</option>
-                      <option>승인</option>
-                      <option>반려</option>
+                      <option value={undefined}>-휴가 상태-</option>
+                      <option value={"APPROVAL"}>승인</option>
+                      <option value={"REJECT"}>반려</option>
                     </select>
                   </div>
                 ) : (
@@ -157,12 +175,17 @@ const DayOffApplyDetail = () => {
               </div>
             </div>
             <div className="flex justify-center">
-              <button
-                className="px-5 py-3 my-5 bg-yellow-300 border rounded-xl text-xl font-bold shadow-md
-         shadow-gray-400 hover:bg-yellow-200 focus:shadow-none w-1/3"
-              >
-                휴가 상태 반영
-              </button>
+              {((data.userType === "MANAGER" &&
+                data.dayOffManagerStatus === "PENDING") ||
+                (data.userType === "TEACHER" &&
+                  data.dayOffTeacherStatus === "PENDING")) && (
+                <button
+                  className="px-5 py-3 my-5 bg-yellow-300 border rounded-xl text-xl font-bold shadow-md
+           shadow-gray-400 hover:bg-yellow-200 focus:shadow-none w-1/3"
+                >
+                  휴가 상태 반영
+                </button>
+              )}
             </div>
           </form>
         </div>
