@@ -1,15 +1,16 @@
 import { Outlet } from "react-router-dom";
-import TeacherSideBar from "../../sidebar/TeacherSideBar";
+import ProductItemListForm from "./ProductItemListForm";
 
-const Homework = () => {
+const ProductItemList = () => {
   return (
     <div className="w-screen h-screen flex justify-center">
       <div className="flex w-5/6 h-5/6 justify-center">
-        <TeacherSideBar />
+        <ProductItemListForm />
         <Outlet />
+        
       </div>
     </div>
   );
 };
 
-export default Homework;
+export default ProductItemList;

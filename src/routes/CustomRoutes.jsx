@@ -8,6 +8,7 @@ import ClassEdit from "../component/class/ClassEdit";
 import CurriculumCreate from "../component/curriculum/CurriculumCreate";
 import Homework from "../component/homework/Homework";
 import BootcampList from "../component/homework/BootcampList";
+import CurriculumList from "../component/homework/CurriculumList";
 import HomeworkList from "../component/homework/HomeworkList";
 import HomeworkDetail from "../component/homework/HomeworkDetail";
 import HomeworkCreate from "../component/homework/HomeworkCreate";
@@ -25,6 +26,8 @@ import Notification from "../component/notification/Notification";
 import NotificationList from "../component/notification/NotificationList";
 import NotificationCreate from "../component/notification/NotificationCreate";
 import NotificationDetail from "../component/notification/NotificationDetail";
+import ProductRegistration from "../component/product/ProductRegistration";
+import ProductItemList from "../component/product/ProductItemList";
 
 const CustomRoute = () => {
   return (
@@ -43,9 +46,13 @@ const CustomRoute = () => {
 
           <Route path="homework/" element={<Homework />}>
             <Route path="" element={<BootcampList />} />
-            <Route path=":bootcampId" element={<HomeworkList />} />
+            <Route path=":bootcampId" element={<CurriculumList />} />
             <Route
-              path=":bootcampId/:homeworkId"
+              path=":bootcampId/:curriculumId"
+              element={<HomeworkList />}
+            />
+            <Route
+              path=":bootcampId/:curriculumId/:homeworkId"
               element={<HomeworkDetail />}
             />
             <Route
@@ -56,10 +63,14 @@ const CustomRoute = () => {
           </Route>
 
           <Route path="product/" element={<Product />}>
+            <Route path="itemregist" element={<ProductRegistration />} />
+            <Route path="itemlist" element={<ProductItemList />} />
+
             <Route path="" element={<BootcampListForProduct />} />
             <Route path=":bootcampId" element={<ProductList />} />
-            <Route path="insert" element={<ProductCreate />} />
             <Route path=":bootcampId/:productId" element={<ProductDetail />} />
+
+            <Route path="insert/:bootcampId" element={<ProductCreate />} />
           </Route>
 
           <Route path="notification/" element={<Notification />}>
@@ -74,7 +85,7 @@ const CustomRoute = () => {
 
           <Route path="dayoff/" element={<DayOff />}>
             <Route path="" element={<DayOffApplyList />} />
-            <Route path=":studentName" element={<DayOffApplyDetail />} />
+            <Route path=":dayOffId" element={<DayOffApplyDetail />} />
           </Route>
         </Route>
       </Routes>
