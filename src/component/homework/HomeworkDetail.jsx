@@ -29,7 +29,7 @@ const HomeworkDetail = () => {
         <div className="flex flex-col w-10/12 font-bold mt-3">
           관련스킬셋
           <div className="border-2 border-yellow-300 rounded-xl p-1 w-1/4 text-center font-semibold">
-            {data.skillSet.skillSetName}
+            {data.skillSetName}
           </div>
         </div>
         <div className="flex flex-col w-10/12 font-bold mt-3 justify-between">

@@ -1,17 +1,9 @@
-import { BsCameraFill } from "react-icons/bs";
-
 const ImgUpload = ({ file, loaded, delFile, fileURL, fileChange }) => {
   return (
     <>
       {file.type?.includes("image") ? (
         <div className="flex justify-center">
-          {loaded === true ? (
-            <img src={fileURL} className="w-48 h-48"></img>
-          ) : (
-            <div className="flex justify-center items-center text-5xl w-48 h-48 bg-gray-400">
-              <BsCameraFill />
-            </div>
-          )}
+          {loaded === true && <img src={fileURL} className="w-48 h-48"></img>}
         </div>
       ) : (
         <div className="text-center">{file.name}</div>

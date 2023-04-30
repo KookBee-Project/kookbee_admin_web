@@ -56,7 +56,7 @@ const CustomRoute = () => {
               element={<HomeworkDetail />}
             />
             <Route
-              path=":bootcampId/:homeworkId/:homeworkAnswerId"
+              path="answer/:bootcampId/:homeworkId/:homeworkAnswerId"
               element={<HomeworkAnswerDetail />}
             />
             <Route path="open" element={<HomeworkCreate />} />

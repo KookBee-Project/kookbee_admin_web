@@ -4,6 +4,7 @@ import { api } from "../../api/api";
 const initialState = {
   data: [],
   homeworkList: [],
+  homeworkAnswerList: [],
   status: "idle",
   error: null,
 };
@@ -30,8 +31,8 @@ export const readHomeworkList = createAsyncThunk(
   }
 );
 
-export const readHomeworkAnswerList = createAsyncThunk(
-  "/homworkAnswerList/read",
+export const readHomeworkQuestionList = createAsyncThunk(
+  "/homworkQuestionList/read",
   async (curriculumId) => {
     const response = await api("GET", `/class/homework/list/${curriculumId}`);
     return response.data;
@@ -46,21 +47,16 @@ export const readHomeworkDetail = createAsyncThunk(
   }
 );
 
-// export const updateCurriculum = createAsyncThunk(
-//   "/curriculum/update",
-//   async (request) => {
-//     const response = await api("PUT", "/curriculum", request);
-//     return response.data;
-//   }
-// );
-
-// export const readCurriculum = createAsyncThunk(
-//   "/curriculum/read",
-//   async (classId) => {
-//     const response = await api("GET", `/curriculum/${classId}`);
-//     return response.data;
-//   }
-// );
+export const readHomeworkAnswerList = createAsyncThunk(
+  "/homwork/answer/list",
+  async (homeworkQuestionId) => {
+    const response = await api(
+      "GET",
+      `/class/homework/answer/list/${homeworkQuestionId}`
+    );
+    return response.data;
+  }
+);
 
 const homeworkSlice = createSlice({
   name: "homework",
@@ -109,6 +105,17 @@ const homeworkSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(readHomeworkDetail.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(readHomeworkAnswerList.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(readHomeworkAnswerList.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.homeworkAnswerList = action.payload;
+      })
+      .addCase(readHomeworkAnswerList.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });
