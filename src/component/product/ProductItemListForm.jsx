@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   getManagerCampusList,
   getProductItems,
@@ -48,12 +49,12 @@ const ProductItemListForm = () => {
             ))}
           </select>
           <table>
-            <thead>
+            <thead className="felx justify-center text-center">
               <th>물품명</th>
               <th>수량</th>
             </thead>
             {itemList?.map((el) => (
-              <tbody>
+              <tbody className="felx justify-center text-center">
                 <tr>
                   <td>{el.productItemName}</td>
                   <td>{el.productItemCounts}</td>
@@ -61,6 +62,16 @@ const ProductItemListForm = () => {
               </tbody>
             ))}
           </table>
+        </div>
+        <div className="flex w-10/12 justify-center">
+          <Link to={"/product/itemregist"}>
+            <button
+              className="px-5 py-3 my-5 bg-yellow-300 border rounded-xl text-xl font-bold 
+        shadow-md shadow-gray-400 hover:bg-yellow-200 focus:shadow-none right"
+            >
+              물품 등록
+            </button>
+          </Link>
         </div>
       </div>
     </div>

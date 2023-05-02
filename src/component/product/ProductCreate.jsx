@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { createHomework } from "../../store/homework/homeworkSlice";
 import {
   getProductItemCount,
   getProductItemList,
   getStudentList,
+  postProduct,
 } from "../../store/product/productSlice";
 
 const ProductCreate = () => {
-  const { productItemCount, status, studentList, productItemList } = useSelector(
-    (state) => state.product
-  );
+  const { productItemCount, status, studentList, productItemList } =
+    useSelector((state) => state.product);
 
   const dispatch = useDispatch();
 
@@ -35,18 +34,19 @@ const ProductCreate = () => {
     productStatus: "",
   });
 
-  const getToday = (e) => {};
+  useEffect(() => {
+    dispatch(getProductItemCount(request.productItemId));
+  }, [request.productItemId]);
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (request.productType === "") {
       alert("카테고리를 선택해주세요.");
     } else {
-      dispatch(createHomework(request));
-      console.log(request);
+      dispatch(postProduct(request));
       if (status === "successed") {
         alert("물품 등록에 성공하였습니다.");
-        // navigate("/product");
+        navigate(`/product/${request.bootcampId}`);
       } else alert("물품 등록에 실패하였습니다.");
     }
   };
@@ -59,7 +59,7 @@ const ProductCreate = () => {
     const yesterday = new Date(today.setDate(today.getDate() - 1));
 
     if (name === "productCount") {
-      new Number(value) > new Number(request.productItemCounts)
+      new Number(value) > new Number(productItemCount)
         ? alert("대여할 수량은 대여 가능 수량을 넘길수 없습니다.")
         : setRequest({ ...request, [name]: value });
     } else if (name === "productRentalEndDate") {
@@ -81,9 +81,9 @@ const ProductCreate = () => {
     } else setRequest({ ...request, [name]: value });
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getProductItemCount(productItemList.id));
-  },[productItemList.id])
+  }, [productItemList.id]);
 
   return (
     <div className="table w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
@@ -117,53 +117,49 @@ const ProductCreate = () => {
             <label htmlFor="productTitle" className="font-bold">
               {"물품명"}
             </label>
-              <select
-                id="productItemId"
-                name="productItemId"
-                onChange={onChangeHandler}
-              >
-                <option value="">물품을 선택해주세요</option>
-                {productItemList?.map((el) => (
-                  <option value={el.id}>{el.productItemName}</option>
-                ))}
-              </select>
-              <div className="flex flex-col my-2 w-10/12">
-                <div className="font-bold">수량</div>
-                <div className="flex justify-between">
-                  <div className="flex flex-col w-2/5">
-                    <label
-                      htmlFor="productAvailableAmount"
-                      className="font-bold"
-                    >
-                      대여 가능 수량
-                    </label>
-                    <input
-                      type="number"
-                      className="border-2 border-gray-400 p-1 rounded-lg text-xl"
-                      value=""
-                      readOnly
-                    />
-                  </div>
-                  <div className="flex flex-col w-2/5">
-                    <label htmlFor="productEndDate" className="font-bold">
-                      대여할 수량
-                    </label>
-                    <input
-                      type="number"
-                      className="border-2 border-gray-400 p-1 rounded-lg text-xl"
-                      name="productCount"
-                      id="productCount"
-                      value={request.productCount}
-                      onChange={onChangeHandler}
-                      required
-                    />
-                  </div>
+            <select
+              id="productItemId"
+              name="productItemId"
+              onChange={onChangeHandler}
+            >
+              <option value="">물품을 선택해주세요</option>
+              {productItemList?.map((el) => (
+                <option value={el.id}>{el.productItemName}</option>
+              ))}
+            </select>
+            <div className="flex flex-col my-2 w-10/12">
+              <div className="font-bold">수량</div>
+              <div className="flex justify-between">
+                <div className="flex flex-col w-2/5">
+                  <label htmlFor="productAvailableAmount" className="font-bold">
+                    대여 가능 수량
+                  </label>
+                  <input
+                    type="number"
+                    className="border-2 border-gray-400 p-1 rounded-lg text-xl"
+                    value={productItemCount}
+                    readOnly
+                  />
+                </div>
+                <div className="flex flex-col w-2/5">
+                  <label htmlFor="productEndDate" className="font-bold">
+                    대여할 수량
+                  </label>
+                  <input
+                    type="number"
+                    className="border-2 border-gray-400 p-1 rounded-lg text-xl"
+                    name="productCount"
+                    id="productCount"
+                    value={request.productCount}
+                    onChange={onChangeHandler}
+                    required
+                  />
                 </div>
               </div>
+            </div>
           </div>
         </div>
         <div className="flex flex-col my-2 w-10/12">
-          <div className="font-bold">대여 기간</div>
           {request?.productType === "RENTAL" && (
             <div className="flex justify-between">
               <div className="flex flex-col w-2/5">
@@ -200,7 +196,7 @@ const ProductCreate = () => {
             <div className="flex justify-between">
               <div className="flex flex-col w-2/5">
                 <label htmlFor="productRentalStartDate" className="font-bold">
-                  제공일
+                  제공예정일
                 </label>
                 <input
                   type="date"

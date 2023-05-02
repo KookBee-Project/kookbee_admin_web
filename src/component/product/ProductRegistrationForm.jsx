@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getManagerCampusList,
   postProductItems,
+  putProductItemCounts,
 } from "../../store/product/productSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -25,14 +26,17 @@ const ProductRegistrationForm = () => {
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setRequest({ ...request, [name]: value });
+    setRequest2({...request2, [name] : value});
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(postProductItems(request));
+    dispatch(putProductItemCounts(request2));
     navigate("/product/itemlist");
   };
 
+  const [request2, setRequest2] = useState("");
 
   return (
     <div className="table w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">

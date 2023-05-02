@@ -8,16 +8,25 @@ const initialState = {
   itemList: [],
   studentList: [],
   productItemList: [],
-  productItemCount: {},
+  productData: [],
+  productItemCount: 0,
+  productTitle: "",
+  productItemName: "",
   status: "idle",
   error: null,
 };
+
+export const postProduct = createAsyncThunk(
+  "/class/product", async(request) => {
+    const response = await api("POST", "/class/product", request);
+    return response.data;
+  }
+)
 
 export const getBootcampList = createAsyncThunk(
   "/product/bootcamplist",
   async () => {
     const response = await api("GET", "/class/product/bootcamplist");
-    console.log(response.data);
     return response.data;
   }
 );
@@ -81,6 +90,34 @@ export const getProductItemCount = createAsyncThunk(
     return response.data;
   }
 );
+
+export const getProductTitle = createAsyncThunk(
+  "class/product/bootcamptitle/${bootcampId}", async(bootcampId) => {
+    const response = await api("GET", `/class/product/bootcamptitle/${bootcampId}`);
+    return response.data;
+  }
+)
+
+export const getProduct = createAsyncThunk(
+  "class/product/product/{bootcampId}", async(bootcampId) => {
+    const response = await api("GET", `class/product/product/${bootcampId}`);
+    return response.data;
+  }
+)
+
+export const getProductName = createAsyncThunk(
+  "product/productItemName/{productItemId}", async(productItemId) => {
+    const response = await api(`/product/productItemName/${productItemId}`);
+    return response.data;
+  }
+)
+
+export const putProductItemCounts = createAsyncThunk(
+  "/class/product/putproductitemcounts", async(request2) => {
+    const response = await api("/class/product/putproductitemcounts", request2);
+    return response.data;
+  }
+)
 
 const productSlice = createSlice({
   name: "product",
@@ -164,7 +201,63 @@ const productSlice = createSlice({
       .addCase(getProductItemCount.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      });
+      })
+      .addCase(postProduct.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(postProduct.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.productItemCount = action.payload;
+      })
+      .addCase(postProduct.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(getProductTitle.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getProductTitle.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.productTitle = action.payload;
+      })
+      .addCase(getProductTitle.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(getProduct.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getProduct.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.productData = action.payload;
+      })
+      .addCase(getProduct.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(getProductName.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getProductName.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.productItemName = action.payload;
+      })
+      .addCase(getProductName.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(putProductItemCounts.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(putProductItemCounts.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.data = action.payload;
+      })
+      .addCase(putProductItemCounts.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      ;
   },
 });
 export default productSlice.reducer;

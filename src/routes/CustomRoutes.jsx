@@ -76,7 +76,7 @@ const CustomRoute = () => {
           <Route path="notification/" element={<Notification />}>
             <Route path="" element={<BootcampListForNotification />} />
             <Route path=":bootcampId" element={<NotificationList />} />
-            <Route path="insert" element={<NotificationCreate />} />
+            <Route path="insert/:bootcampId" element={<NotificationCreate />} />
             <Route
               path=":bootcampId/:notificationId"
               element={<NotificationDetail />}
