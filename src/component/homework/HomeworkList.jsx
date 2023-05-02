@@ -50,7 +50,7 @@ const HomeworkList = () => {
                   </td>
                   <td className="p-1">{el.homeworkQuestionStartDate}</td>
                   <td className="p-1">{el.homeworkQuestionEndDate}</td>
-                  <td className="p-1">{el.skillSet.skillSetName}</td>
+                  <td className="p-1">{el.skillSetName}</td>
                   <td className="p-1">{el.summitStudent}</td>
                   <td className="p-1">{el.totalStudent}</td>
                 </tr>

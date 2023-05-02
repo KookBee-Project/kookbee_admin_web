@@ -40,39 +40,56 @@ export const getManagerCampusList = createAsyncThunk(
 );
 
 export const postProductItems = createAsyncThunk(
-  "/class/product/productitems", async(request) => {
+  "/class/product/productitems",
+  async (request) => {
     const response = await api("POST", "/class/product/productitems", request);
     return response.data;
   }
-)
+);
 
 export const getProductItems = createAsyncThunk(
-  "/class/product/productlist", async(campusName) => {
-    const response = await api("GET", `/class/product/productlist/${campusName}`);
+  "/class/product/productlist",
+  async (campusName) => {
+    const response = await api(
+      "GET",
+      `/class/product/productlist/${campusName}`
+    );
     return response.data;
   }
-)
+);
 
 export const getStudentList = createAsyncThunk(
-  "/class/product/studentlist", async(bootcampId) => {
-    const response = await api("GET", `/class/product/studentlist/${bootcampId}`);
+  "/class/product/studentlist",
+  async (bootcampId) => {
+    const response = await api(
+      "GET",
+      `/class/product/studentlist/${bootcampId}`
+    );
     return response.data;
   }
-)
+);
 
 export const getProductItemList = createAsyncThunk(
-  "/calss/product/productitemlist/${bootcampId}", async(bootcampId) => {
-    const response = await api("GET", `/class/product/productitemlist/${bootcampId}`);
+  "/calss/product/productitemlist/${bootcampId}",
+  async (bootcampId) => {
+    const response = await api(
+      "GET",
+      `/class/product/productitemlist/${bootcampId}`
+    );
     return response.data;
   }
-)
+);
 
 export const getProductItemCount = createAsyncThunk(
-  "/class/product/productitemcount/{productItemId}", async(productItemId) => {
-    const response = await api("GET", `/class/product/productitemcount/${productItemId}`);
+  "/class/product/productitemcount/{productItemId}",
+  async (productItemId) => {
+    const response = await api(
+      "GET",
+      `/class/product/productitemcount/${productItemId}`
+    );
     return response.data;
   }
-)
+);
 
 export const getProductTitle = createAsyncThunk(
   "class/product/bootcamptitle/${bootcampId}", async(bootcampId) => {

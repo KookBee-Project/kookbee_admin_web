@@ -24,8 +24,9 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (status === "failed") alert(error);
-    else if (status === "successed") navigate("/bootcamp");
+    if (status === "failed" && request.userEmail !== "") alert(error);
+    else if (status === "successed" && request.userEmail !== "")
+      navigate("/bootcamp");
   }, [status]);
 
   return (

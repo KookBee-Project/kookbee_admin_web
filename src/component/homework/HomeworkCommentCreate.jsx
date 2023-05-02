@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createHomeworkComment } from "../../store/homework/homeworkSlice";
 
-const HomeworkCommentCreate = () => {
-  const { data, status, error } = useSelector((state) => state.homework);
+const HomeworkCommentCreate = ({ homeworkAnswerId }) => {
+  const { createStatus } = useSelector((state) => state.homework);
   const [request, setRequest] = useState({
-    homeworkRating: "",
-    homeworkRatingComment: "",
+    homeworkAnswerId: homeworkAnswerId,
+    homeworkAnswerScore: "",
+    homeworkAnswerComment: "",
   });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const setInput = (e) => {
     const { name, value } = e.target;
@@ -19,54 +23,58 @@ const HomeworkCommentCreate = () => {
     e.preventDefault();
     console.log(request);
     if (
-      request.homeworkRating === "" ||
-      request.homeworkRating === "- 등급선택 -"
+      request.homeworkAnswerScore === "" ||
+      request.homeworkAnswerScore === "- 등급선택 -"
     ) {
       alert("과제 등급을 지정해주세요!");
-    } else {
-      dispatch(createHomeworkComment(request));
-      if (status === "successed") {
-        alert("과제 평가 등록에 성공하였습니다.");
-        navigate("/homework");
-      } else alert("과제 평가 등록에 실패하였습니다.");
-    }
+    } else dispatch(createHomeworkComment(request));
   };
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (createStatus === "successed" && request.homeworkAnswerComment !== "") {
+      alert("과제 평가 등록에 성공하였습니다.");
+      navigate("/homework");
+    } else if (
+      createStatus === "failed" &&
+      request.homeworkAnswerComment !== ""
+    )
+      alert("과제 평가 등록에 실패하였습니다.");
+  }, [createStatus]);
 
   return (
     <div className="flex w-10/12">
       <form onSubmit={onSubmit} className="flex h-4/5 w-full items-center">
         <div className="flex flex-col my-5 w-full">
           <div className="flex flex-col w-full">
-            <label htmlFor="homeworkRatingComment" className="font-bold mt-3">
+            <label htmlFor="homeworkAnswerComment" className="font-bold mt-3">
               {"코멘트"}
             </label>
             <textarea
               className="resize-none border-2 border-yellow-200 p-1 rounded-lg text-xl h-40"
               type="textarea"
-              name={"homeworkRatingComment"}
-              id={"homeworkRatingComment"}
-              value={request.homeworkRatingComment}
+              name={"homeworkAnswerComment"}
+              id={"homeworkAnswerComment"}
+              value={request.homeworkAnswerComment}
               onChange={setInput}
               required
             />
           </div>
           <div className="flex flex-col w-1/3">
-            <label htmlFor="homeworkRating" className="font-bold mt-3">
+            <label htmlFor="homeworkAnswerScore" className="font-bold mt-3">
               {"결과"}
             </label>
             <select
-              id="homeworkRating"
-              name="homeworkRating"
+              id="homeworkAnswerScore"
+              name="homeworkAnswerScore"
               className="border-2 border-yellow-200 p-1 rounded-lg text-base"
               onChange={setInput}
             >
               <option>- 등급선택 -</option>
-              <option>상</option>
-              <option>중</option>
-              <option>하</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
             </select>
           </div>
           <div className="flex justify-center">

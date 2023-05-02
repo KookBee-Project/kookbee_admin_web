@@ -1,29 +1,22 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { readHomeworkAnswerList } from "../../store/homework/homeworkSlice";
 
 const HomeworkAnswerList = () => {
   // homeowrkId로 과제제출목록 불러오기
   // 이건 임시데이터
-  const ids = {
-    bootcampId: "1",
-    homeworkId: "1",
-  };
-  const data = [
-    {
-      homeworkAnswerName: "정유철",
-      homeworkSummitAt: "2023-04-17",
-      homeworkRating: "",
-    },
-    {
-      homeworkAnswerName: "김진우",
-      homeworkSummitAt: "2023-04-17",
-      homeworkRating: "상",
-    },
-    {
-      homeworkAnswerName: "김한휘",
-      homeworkSummitAt: "2023-04-18",
-      homeworkRating: "상",
-    },
-  ];
+  const { homeworkAnswerList } = useSelector((state) => state.homework);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { bootcampId, homeworkId } = useParams();
+
+  useEffect(() => {
+    dispatch(readHomeworkAnswerList(homeworkId));
+  }, []);
+
+  console.log(homeworkAnswerList);
 
   return (
     <div className="w-full">
@@ -39,32 +32,34 @@ const HomeworkAnswerList = () => {
             </tr>
           </thead>
           <tbody className="text-center border border-black">
-            {data?.map((el, idx) => (
+            {homeworkAnswerList?.map((el, idx) => (
               <tr key={idx} className="w-full">
                 <td className="p-1">{idx + 1}</td>
-                <Link
-                  to={`/homework/${ids.bootcampId}/${ids.homeworkId}/${
-                    idx + 1
-                  }`}
+                <td
+                  className="p-1 hover:cursor-pointer"
+                  onClick={() => {
+                    navigate(
+                      `/homework/answer/${bootcampId}/${homeworkId}/${el.homeworkAnswerId}`
+                    );
+                  }}
                 >
-                  <td className="p-1">{el.homeworkAnswerName}</td>
-                </Link>
-                <td className="p-1">{el.homeworkSummitAt}</td>
+                  {el.studentName}
+                </td>
+                <td className="p-1">{el.homeworkAnswerUpdateAt}</td>
                 {el.homeworkRating ? (
-                  <td className="p-1">{el.homeworkRating}</td>
+                  <td className="p-1">{el.homeworkAnswerScore}</td>
                 ) : (
-                  <Link
-                    to={`/homework/${ids.bootcampId}/${ids.homeworkId}/${
-                      idx + 1
-                    }`}
+                  <td
+                    className="bg-yellow-300 rounded-lg font-bold 
+                 hover:bg-yellow-200 hover:cursor-pointer w-1/5"
+                    onClick={() => {
+                      navigate(
+                        `/homework/answer/${bootcampId}/${homeworkId}/${el.homeworkAnswerId}`
+                      );
+                    }}
                   >
-                    <button
-                      className="bg-yellow-300 border rounded-lg text-base font-bold 
-                 hover:bg-yellow-200 p-0.5"
-                    >
-                      평가
-                    </button>
-                  </Link>
+                    평가
+                  </td>
                 )}
               </tr>
             ))}
