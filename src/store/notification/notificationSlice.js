@@ -28,6 +28,14 @@ export const getNotificationList = createAsyncThunk(
   }
 );
 
+export const getNotification = createAsyncThunk(
+  "/notification",
+  async (postId) => {
+    const response = await api("GET", `/class/notification/${postId}`);
+    return response.data;
+  }
+);
+
 const notificationSlice = createSlice({
   name: "notification",
   initialState,
@@ -53,6 +61,17 @@ const notificationSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(getNotificationList.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(getNotification.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getNotification.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.data = action.payload;
+      })
+      .addCase(getNotification.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });

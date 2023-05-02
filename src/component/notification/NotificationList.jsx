@@ -8,6 +8,7 @@ const NotificationList = () => {
   // 이건 임시데이터
   const bootcampId = "1";
   const { data, status, error } = useSelector((state) => state.notification);
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
