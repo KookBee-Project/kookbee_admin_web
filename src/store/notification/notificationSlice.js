@@ -3,7 +3,7 @@ import { api } from "../../api/api";
 
 const initialState = {
   data: [],
-  detailData: [],
+  detailData: {},
   status: "idle",
   delStatus: "idle",
   detailStatus: "idle",
@@ -13,25 +13,33 @@ const initialState = {
 export const createNotification = createAsyncThunk(
   "/notification/create",
   async (request) => {
-    const response = await api("POST", "/class/notification", request);
+    const response = await api("POST", "/class/post", request);
     return response.data;
   }
 );
 export const getNotificationList = createAsyncThunk(
   "/notificationList",
   async (bootcampId) => {
-    const response = await api(
-      "GET",
-      `/class/notification/${bootcampId}/NOTIFICATION`
-    );
+    const response = await api("GET", `/class/post/${bootcampId}/NOTIFICATION`);
     return response.data;
   }
 );
+export const getQNAList = createAsyncThunk("/QNAList", async (bootcampId) => {
+  const response = await api("GET", `/class/post/${bootcampId}/QNA`);
+  return response.data;
+});
 
 export const getNotification = createAsyncThunk(
   "/notification",
   async (postId) => {
-    const response = await api("GET", `/class/notification/${postId}`);
+    const response = await api("GET", `/class/post/${postId}`);
+    return response.data;
+  }
+);
+export const deleteNotification = createAsyncThunk(
+  "/delete/notification",
+  async (postId) => {
+    const response = await api("DELETE", `/class/post/${postId}`);
     return response.data;
   }
 );
@@ -69,9 +77,19 @@ const notificationSlice = createSlice({
       })
       .addCase(getNotification.fulfilled, (state, action) => {
         state.status = "successed";
-        state.data = action.payload;
+        state.detailData = action.payload;
       })
       .addCase(getNotification.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(deleteNotification.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(deleteNotification.fulfilled, (state, action) => {
+        state.status = "successed";
+      })
+      .addCase(deleteNotification.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });
