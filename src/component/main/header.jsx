@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import logoImage from "../../img/KookBee.PNG";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
@@ -16,6 +16,8 @@ import {
   PlayCircleIcon,
 } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
+import { getMe } from "../../store/admin/adminSlice";
+import { useDispatch } from "react-redux";
 
 const products = [
   {
@@ -58,8 +60,15 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+  dispatch(getMe());
+}, []);
 
   return (
     <header className="bg-white">

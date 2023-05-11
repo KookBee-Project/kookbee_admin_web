@@ -11,9 +11,9 @@ const initialState = {
   //
 };
 export const createComment = createAsyncThunk(
-  "/notification/create",
-  async (request) => {
-    const response = await api("POST", `/comment/${postID}`, request);
+  "/comment/create",
+  async (request, postId) => {
+    const response = await api("POST", `class/comment/${postId}`, request);
     return response.data;
   }
 );

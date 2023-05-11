@@ -1,4 +1,4 @@
-import Notification from "./Notification";
+import QNA from "./QNA";
 import {
   deleteNotification,
   getNotification,
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api } from "../../api/api";
-const NotificationDetail = () => {
+const QNADetail = () => {
   const { userId } = useSelector((state) => state.admin.data);
   const { bootcampId, notificationId } = useParams();
   const { detailData, status, error } = useSelector(
@@ -163,4 +163,4 @@ const NotificationDetail = () => {
   );
 };
 
-export default NotificationDetail;
+export default QNADetail;

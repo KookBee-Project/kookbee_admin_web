@@ -26,6 +26,12 @@ import Notification from "../component/notification/Notification";
 import NotificationList from "../component/notification/NotificationList";
 import NotificationCreate from "../component/notification/NotificationCreate";
 import NotificationDetail from "../component/notification/NotificationDetail";
+
+import BootcampListForQNA from "../component/QNA/BootcampListForQNA";
+import QNA from "../component/QNA/QNA";
+import QNAList from "../component/QNA/QNAList";
+import QNACreate from "../component/QNA/QNACreate";
+import QNADetail from "../component/QNA/QNADetail";
 import ProductRegistration from "../component/product/ProductRegistration";
 import ProductItemList from "../component/product/ProductItemList";
 
@@ -81,6 +87,13 @@ const CustomRoute = () => {
               path=":bootcampId/:notificationId"
               element={<NotificationDetail />}
             />
+          </Route>
+
+          <Route path="QNA/" element={<QNA />}>
+            <Route path="" element={<BootcampListForQNA />} />
+            <Route path=":bootcampId" element={<QNAList />} />
+            <Route path="insert/:bootcampId" element={<QNACreate />} />
+            <Route path=":bootcampId/:notificationId" element={<QNADetail />} />
           </Route>
 
           <Route path="dayoff/" element={<DayOff />}>
