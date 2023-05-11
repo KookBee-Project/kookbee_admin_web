@@ -44,6 +44,7 @@ const CustomRoute = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/bootcamp/open" element={<ClassCreate />} />
           <Route path="/bootcamp" element={<ClassHistory />} />
+          <Route path="/bootcamp/teacher" element={<ClassHistory />} />
           <Route path="/bootcamp/edit/:bootcampId" element={<ClassEdit />} />
           <Route
             path="/curriculum/create/:bootcampId"
