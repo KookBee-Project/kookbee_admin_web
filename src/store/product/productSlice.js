@@ -17,11 +17,12 @@ const initialState = {
 };
 
 export const postProduct = createAsyncThunk(
-  "/class/product", async(request) => {
+  "/class/product",
+  async (request) => {
     const response = await api("POST", "/class/product", request);
     return response.data;
   }
-)
+);
 
 export const getBootcampList = createAsyncThunk(
   "/product/bootcamplist",
@@ -92,32 +93,39 @@ export const getProductItemCount = createAsyncThunk(
 );
 
 export const getProductTitle = createAsyncThunk(
-  "class/product/bootcamptitle/${bootcampId}", async(bootcampId) => {
-    const response = await api("GET", `/class/product/bootcamptitle/${bootcampId}`);
+  "class/product/bootcamptitle/${bootcampId}",
+  async (bootcampId) => {
+    const response = await api(
+      "GET",
+      `/class/product/bootcamptitle/${bootcampId}`
+    );
     return response.data;
   }
-)
+);
 
 export const getProduct = createAsyncThunk(
-  "class/product/product/{bootcampId}", async(bootcampId) => {
+  "class/product/product/{bootcampId}",
+  async (bootcampId) => {
     const response = await api("GET", `class/product/product/${bootcampId}`);
     return response.data;
   }
-)
+);
 
 export const getProductName = createAsyncThunk(
-  "product/productItemName/{productItemId}", async(productItemId) => {
+  "product/productItemName/{productItemId}",
+  async (productItemId) => {
     const response = await api(`/product/productItemName/${productItemId}`);
     return response.data;
   }
-)
+);
 
 export const putProductItemCounts = createAsyncThunk(
-  "/class/product/putproductitemcounts", async(request2) => {
-    const response = await api("/class/product/putproductitemcounts", request2);
+  "/class/product/putproductitemcounts",
+  async (request) => {
+    const response = await api("PUT", "/class/product/putproductitemcounts", request);
     return response.data;
   }
-)
+);
 
 const productSlice = createSlice({
   name: "product",
@@ -256,8 +264,7 @@ const productSlice = createSlice({
       .addCase(putProductItemCounts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      })
-      ;
+      });
   },
 });
 export default productSlice.reducer;
