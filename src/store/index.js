@@ -10,6 +10,7 @@ import dayOffSlice from "./dayoff/dayOffSlice";
 import homeworkSlice from "./homework/homeworkSlice";
 import productSlice from "./product/productSlice";
 import notificationSlice from "./notification/notificationSlice";
+import projectSlice from "./project/projectSlice";
 
 export default configureStore({
   reducer: {
@@ -23,5 +24,6 @@ export default configureStore({
     dayOff: dayOffSlice,
     product: productSlice,
     notification: notificationSlice,
+    project: projectSlice,
   },
 });
