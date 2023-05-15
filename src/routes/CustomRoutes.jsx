@@ -34,6 +34,9 @@ import QNACreate from "../component/QNA/QNACreate";
 import QNADetail from "../component/QNA/QNADetail";
 import ProductRegistration from "../component/product/ProductRegistration";
 import ProductItemList from "../component/product/ProductItemList";
+import TeacherBootcampList from "../component/class/TeacherBootcampList";
+import TeacherProjectList from "../component/project/TeacherProjectList";
+import ProjectDetail from "../component/project/ProjectDetail";
 
 const CustomRoute = () => {
   return (
@@ -44,11 +47,17 @@ const CustomRoute = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/bootcamp/open" element={<ClassCreate />} />
           <Route path="/bootcamp" element={<ClassHistory />} />
-          <Route path="/bootcamp/teacher" element={<ClassHistory />} />
+          <Route path="/bootcamp/teacher" element={<TeacherBootcampList />} />
           <Route path="/bootcamp/edit/:bootcampId" element={<ClassEdit />} />
           <Route
             path="/curriculum/create/:bootcampId"
             element={<CurriculumCreate />}
+          />
+
+          <Route path="/project/:bootcampId" element={<TeacherProjectList />} />
+          <Route
+            path="/project/detail/:projectId"
+            element={<ProjectDetail />}
           />
 
           <Route path="homework/" element={<Homework />}>

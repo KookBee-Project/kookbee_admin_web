@@ -1,15 +1,14 @@
 import TeacherSideBar from "../../sidebar/TeacherSideBar";
-import TeacherBootcampListItem from "./TeacherBootcampLIstItem";
+import TeacherProjectListItem from "./TeacherProjectListItem";
 
-const TeacherBootcampList = () => {
+const TeacherProjectList = () => {
   return (
     <div className="w-screen h-screen flex justify-center">
       <div className="flex w-5/6 h-5/6 justify-center">
         <TeacherSideBar />
-        <TeacherBootcampListItem />
+        <TeacherProjectListItem />
       </div>
     </div>
   );
 };
-
-export default TeacherBootcampList;
+export default TeacherProjectList;
