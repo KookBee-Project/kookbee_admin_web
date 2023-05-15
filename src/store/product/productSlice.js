@@ -17,11 +17,12 @@ const initialState = {
 };
 
 export const postProduct = createAsyncThunk(
-  "/class/product", async(request) => {
+  "/class/product",
+  async (request) => {
     const response = await api("POST", "/class/product", request);
     return response.data;
   }
-)
+);
 
 export const getBootcampList = createAsyncThunk(
   "/product/bootcamplist",
@@ -40,67 +41,91 @@ export const getManagerCampusList = createAsyncThunk(
 );
 
 export const postProductItems = createAsyncThunk(
-  "/class/product/productitems", async(request) => {
+  "/class/product/productitems",
+  async (request) => {
     const response = await api("POST", "/class/product/productitems", request);
     return response.data;
   }
-)
+);
 
 export const getProductItems = createAsyncThunk(
-  "/class/product/productlist", async(campusName) => {
-    const response = await api("GET", `/class/product/productlist/${campusName}`);
+  "/class/product/productlist",
+  async (campusName) => {
+    const response = await api(
+      "GET",
+      `/class/product/productlist/${campusName}`
+    );
     return response.data;
   }
-)
+);
 
 export const getStudentList = createAsyncThunk(
-  "/class/product/studentlist", async(bootcampId) => {
-    const response = await api("GET", `/class/product/studentlist/${bootcampId}`);
+  "/class/product/studentlist",
+  async (bootcampId) => {
+    const response = await api(
+      "GET",
+      `/class/product/studentlist/${bootcampId}`
+    );
     return response.data;
   }
-)
+);
 
 export const getProductItemList = createAsyncThunk(
-  "/calss/product/productitemlist/${bootcampId}", async(bootcampId) => {
-    const response = await api("GET", `/class/product/productitemlist/${bootcampId}`);
+  "/calss/product/productitemlist/${bootcampId}",
+  async (bootcampId) => {
+    const response = await api(
+      "GET",
+      `/class/product/productitemlist/${bootcampId}`
+    );
     return response.data;
   }
-)
+);
 
 export const getProductItemCount = createAsyncThunk(
-  "/class/product/productitemcount/{productItemId}", async(productItemId) => {
-    const response = await api("GET", `/class/product/productitemcount/${productItemId}`);
+  "/class/product/productitemcount/{productItemId}",
+  async (productItemId) => {
+    const response = await api(
+      "GET",
+      `/class/product/productitemcount/${productItemId}`
+    );
     return response.data;
   }
-)
+);
 
 export const getProductTitle = createAsyncThunk(
-  "class/product/bootcamptitle/${bootcampId}", async(bootcampId) => {
-    const response = await api("GET", `/class/product/bootcamptitle/${bootcampId}`);
+  "class/product/bootcamptitle/${bootcampId}",
+  async (bootcampId) => {
+    const response = await api(
+      "GET",
+      `/class/product/bootcamptitle/${bootcampId}`
+    );
     return response.data;
   }
-)
+);
 
 export const getProduct = createAsyncThunk(
-  "class/product/product/{bootcampId}", async(bootcampId) => {
+  "class/product/product/{bootcampId}",
+  async (bootcampId) => {
     const response = await api("GET", `class/product/product/${bootcampId}`);
     return response.data;
   }
-)
+);
 
 export const getProductName = createAsyncThunk(
-  "product/productItemName/{productItemId}", async(productItemId) => {
+  "product/productItemName/{productItemId}",
+  async (productItemId) => {
     const response = await api(`/product/productItemName/${productItemId}`);
     return response.data;
   }
-)
+);
 
 export const putProductItemCounts = createAsyncThunk(
-  "/class/product/putproductitemcounts", async(request2) => {
-    const response = await api("/class/product/putproductitemcounts", request2);
+  "/class/product/putproductitemcounts",
+  async (request) => {
+    const response = await api("PUT", "/class/product/putproductitemcounts", request);
     return response.data;
   }
-)
+);
 
 const productSlice = createSlice({
   name: "product",
@@ -239,8 +264,7 @@ const productSlice = createSlice({
       .addCase(putProductItemCounts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      })
-      ;
+      });
   },
 });
 export default productSlice.reducer;
