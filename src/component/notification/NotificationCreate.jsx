@@ -11,6 +11,7 @@ const NotificationCreate = () => {
     postContent: "",
     postType: "NOTIFICATION",
     fileUUID: "",
+    bootcampId: bootcampId,
   });
 
   const [file, setFile] = useState("");
@@ -51,7 +52,7 @@ const NotificationCreate = () => {
   const setFileData = (e) => {
     setFile(e.target.files[0]);
   };
-  
+
   return (
     <div className="table w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
       <div className="text-center font-bold text-3xl mt-10">공지사항 등록</div>

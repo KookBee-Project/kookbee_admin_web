@@ -22,7 +22,7 @@ const QNADetail = () => {
 
   const onDeleteNotification = () => {
     dispatch(deleteNotification(notificationId));
-    alert("공지사항 삭제 성공.");
+    alert("Q&A 삭제 성공.");
     navigate(`/notification/${bootcampId}`);
   };
 
@@ -56,7 +56,7 @@ const QNADetail = () => {
   return (
     detailData && (
       <div className="table w-1/2 h-5/6 min-w-40 min-h-40 my-20 mx-20 border-4 border-yellow-300 rounded-3xl">
-        <div className="text-center font-bold text-3xl mt-10">공지사항</div>
+        <div className="text-center font-bold text-3xl mt-10">Q&A</div>
         <div className="flex flex-col items-center my-5 w-full">
           <div className="flex flex-col w-10/12 font-bold mt-3 justify-between">
             <div className="flex w-full">
