@@ -98,66 +98,66 @@ const SignUp = () => {
     const { name, value } = e.target;
     setUsers({ ...users, [name]: value });
 
-    // 이메일 검사
-    const emailRegExp =
-      /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-    if (!emailRegExp.test(value)) {
-      setUserEmailMessage("이메일의 형식이 올바르지 않습니다!");
-    } else {
-      setUserEmailMessage("");
-    }
+    // // 이메일 검사
+    // const emailRegExp =
+    //   /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+    // if (!emailRegExp.test(value)) {
+    //   setUserEmailMessage("이메일의 형식이 올바르지 않습니다!");
+    // } else {
+    //   setUserEmailMessage("");
+    // }
 
-    // 비밀번호 검사
-    if (name === "userPw") {
-      const passwordRegExp =
-        /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-      if (!passwordRegExp.test(value)) {
-        setUserPwMessage(
-          "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요."
-        );
-      } else {
-        setUserPwMessage("");
-      }
-    }
+    // // 비밀번호 검사
+    // if (name === "userPw") {
+    //   const passwordRegExp =
+    //     /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    //   if (!passwordRegExp.test(value)) {
+    //     setUserPwMessage(
+    //       "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요."
+    //     );
+    //   } else {
+    //     setUserPwMessage("");
+    //   }
+    // }
 
-    // 비밀번호 재확인
-    if (name === "userPwConfirm") {
-      // 비동기라 순서가 늦게 진행될 때, userPwConfirm을 입력하고 있을 때 즉시 비교하여 작용한다.
-      if (users.userPw === value) {
-        // 입력되는 value값을 즉시 호출한다.
-        setUserPwConfirmMessage("");
-      } else {
-        setUserPwConfirmMessage("비밀번호가 일치하지 않습니다.");
-      }
-    }
+    // // 비밀번호 재확인
+    // if (name === "userPwConfirm") {
+    //   // 비동기라 순서가 늦게 진행될 때, userPwConfirm을 입력하고 있을 때 즉시 비교하여 작용한다.
+    //   if (users.userPw === value) {
+    //     // 입력되는 value값을 즉시 호출한다.
+    //     setUserPwConfirmMessage("");
+    //   } else {
+    //     setUserPwConfirmMessage("비밀번호가 일치하지 않습니다.");
+    //   }
+    // }
 
-    // 이름 확인
-    if (name === "userName") {
-      if (value.length < 2 || value.length > 5) {
-        setUserNameMessage("이름은 2글자 이상 5글자 이하로 입력해주세요!");
-      } else {
-        setUserNameMessage("");
-      }
-    }
+    // // 이름 확인
+    // if (name === "userName") {
+    //   if (value.length < 2 || value.length > 5) {
+    //     setUserNameMessage("이름은 2글자 이상 5글자 이하로 입력해주세요!");
+    //   } else {
+    //     setUserNameMessage("");
+    //   }
+    // }
 
-    // 생년월일 확인
-    if (name === "userBirth") {
-      if (value.length != 8) {
-        setUserBirthMessage("올바르지 않은 생년월일입니다.");
-      } else {
-        setUserBirthMessage("");
-      }
-    }
+    // // 생년월일 확인
+    // if (name === "userBirth") {
+    //   if (value.length != 8) {
+    //     setUserBirthMessage("올바르지 않은 생년월일입니다.");
+    //   } else {
+    //     setUserBirthMessage("");
+    //   }
+    // }
 
-    // 연락처 양식 확인
-    if (name === "serName") {
-      const phoneRegExp = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
-      if (!phoneRegExp.test(value)) {
-        setUserPhoneNumberMessage("올바른 형식이 아닙니다!");
-      } else {
-        setUserPhoneNumberMessage("");
-      }
-    }
+    // // 연락처 양식 확인
+    // if (name === "serName") {
+    //   const phoneRegExp = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
+    //   if (!phoneRegExp.test(value)) {
+    //     setUserPhoneNumberMessage("올바른 형식이 아닙니다!");
+    //   } else {
+    //     setUserPhoneNumberMessage("");
+    //   }
+    // }
   };
 
   const dispatch = useDispatch();
