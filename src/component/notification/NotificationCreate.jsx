@@ -11,13 +11,13 @@ const NotificationCreate = () => {
     postContent: "",
     postType: "NOTIFICATION",
     fileUUID: "",
+    bootcampId: bootcampId,
   });
 
   const [file, setFile] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { bootcampId } = useParams();
-
 
   const setInput = (e) => {
     const { name, value } = e.target;
@@ -26,7 +26,6 @@ const NotificationCreate = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(request);
     dispatch(createNotification(request));
   };
 

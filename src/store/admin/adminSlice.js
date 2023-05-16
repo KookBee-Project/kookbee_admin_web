@@ -28,6 +28,11 @@ export const getUserType = createAsyncThunk(
   }
 );
 
+export const getMe = createAsyncThunk("/user", async () => {
+  const response = await api("GET", "/user");
+  return response.data;
+});
+
 const adminSlice = createSlice({
   name: "admin",
   initialState,
@@ -63,6 +68,17 @@ const adminSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(getUserType.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload.data;
+      })
+      .addCase(getMe.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getMe.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.data = action.payload;
+      })
+      .addCase(getMe.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload.data;
       });

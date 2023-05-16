@@ -6,6 +6,7 @@ import {
   getProductItemList,
   getStudentList,
   postProduct,
+  putProductItemCounts,
 } from "../../store/product/productSlice";
 
 const ProductCreate = () => {
@@ -44,6 +45,7 @@ const ProductCreate = () => {
       alert("카테고리를 선택해주세요.");
     } else {
       dispatch(postProduct(request));
+      dispatch(putProductItemCounts(request));
       if (status === "successed") {
         alert("물품 등록에 성공하였습니다.");
         navigate(`/product/${request.bootcampId}`);
