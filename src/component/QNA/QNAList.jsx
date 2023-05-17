@@ -1,14 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getQNAList } from "../../store/notification/notificationSlice";
 import { useEffect } from "react";
 
 const QNAList = () => {
   // 부트캠프Id로 물품목록 불러오기
   // 이건 임시데이터
-  const bootcampId = "1";
   const { data, status, error } = useSelector((state) => state.notification);
-
+  const { bootcampId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
