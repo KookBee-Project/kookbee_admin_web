@@ -71,7 +71,19 @@ const notificationSlice = createSlice({
       .addCase(getNotificationList.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })  
+      .addCase(getQNAList.pending, (state, action) => {
+        state.status = "loading";
       })
+      .addCase(getQNAList.fulfilled, (state, action) => {
+        state.status = "successed";
+        state.data = action.payload;
+      })
+      .addCase(getQNAList.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+    
       .addCase(getNotification.pending, (state, action) => {
         state.status = "loading";
       })
